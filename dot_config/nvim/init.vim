@@ -4,6 +4,7 @@ set ignorecase
 set nowrap
 set mouse=a
 set clipboard=unnamed
+set colorcolumn=80 " highlight column 80 to aid manual wrapping
 
 " Softtabs, 2 spaces
 set tabstop=2
