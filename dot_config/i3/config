@@ -21,7 +21,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
 
 # Use PrtScr to take screenshot
-bindsym Print exec --no-startup-id scrot '~/Pictures/Screenshots/%Y%m%d_%H%M%S.jpg'
+bindsym Print exec --no-startup-id maim ~/Pictures/Screenshots/$(date +%s).jpg
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
