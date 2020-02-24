@@ -6,7 +6,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/Down
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/i3/polybar.sh
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
