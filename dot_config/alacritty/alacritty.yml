@@ -1,0 +1,46 @@
+env:
+  TERM: xterm-256color
+
+# Font configuration
+font:
+  normal:
+    family: Fira Code
+    style: Regular
+  bold:
+    family: Fira Code
+    style: Bold
+  italic:
+    family: Fira Code
+    style: Italic
+  bold_italic:
+    family: Fira Code
+    style: Bold Italic
+  size: 11.0
+
+colors:
+  # Default colors
+  primary:
+    background: '0x161827'
+    foreground: '0xdfdfdf'
+
+  # Normal colors
+  normal:
+    black:   '0x000000'
+    red:     '0xfb000a'
+    green:   '0x8ce10b'
+    yellow:  '0xffb900'
+    blue:    '0x008df8'
+    magenta: '0x6d43a6'
+    cyan:    '0x00d8eb'
+    white:   '0xe1e1e1'
+
+  # Bright colors
+  bright:
+    black:   '0x5f5f5f'
+    red:     '0xff2942'
+    green:   '0xabe15b'
+    yellow:  '0xffd242'
+    blue:    '0x2590ff'
+    magenta: '0x9a5feb'
+    cyan:    '0x67fff0'
+    white:   '0xffffff'
