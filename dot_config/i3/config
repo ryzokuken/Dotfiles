@@ -2,11 +2,12 @@ set $mod Mod4
 
 font pango:Roboto Sans 10
 
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/Downloads/stretched-2559-1440-699273.png
-exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
-exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
-exec_always --no-startup-id $HOME/.config/i3/polybar.sh
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/Downloads/stretched-2559-1440-699273.png # set up system lock
+exec --no-startup-id nm-applet " start NetworkManager applet
+exec --no-startup-id blueman-applet " start bluetooth applet
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent # start geoclue agent for Redshift location
+exec_always --no-startup-id $HOME/.config/i3/polybar.sh # render polybar
+exec --no-startup-id picom -bc # start conky
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
