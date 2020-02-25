@@ -34,7 +34,8 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " PLUGIN CONFIGURATION
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1 " enable tabline
+let g:airline_powerline_fonts = 1 " enable powerline fonts
 
 " COC CONFIGURATION
 " if hidden is not set, TextEdit might fail.
