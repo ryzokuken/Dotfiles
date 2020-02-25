@@ -17,6 +17,7 @@ font:
     style: Bold Italic
   size: 11.0
 
+# Argonaut colorscheme
 colors:
   # Default colors
   primary:
@@ -44,3 +45,7 @@ colors:
     magenta: '0x9a5feb'
     cyan:    '0x67fff0'
     white:   '0xffffff'
+
+# Keybindings
+key_bindings:
+  - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
