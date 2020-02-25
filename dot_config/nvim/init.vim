@@ -1,9 +1,9 @@
-" OPTIONS
-set number
-set ignorecase
-set nowrap
-set mouse=a
-set clipboard=unnamed
+" GENERAL OPTIONS
+set number " line numbers
+set ignorecase " IDGAF
+set nowrap " wrapping bad
+set mouse=a " mouse good
+set clipboard=unnamedplus " clipboard good too, as long as it works
 set colorcolumn=80 " highlight column 80 to aid manual wrapping
 
 " Softtabs, 2 spaces
