@@ -5,10 +5,18 @@ set nowrap " wrapping bad
 set mouse=a " mouse good
 set clipboard=unnamedplus " clipboard good too, as long as it works
 set colorcolumn=80 " highlight column 80 to aid manual wrapping
+set showcmd " show incomplete commands
+filetype plugin on " filetypes are nice
+filetype indent on " some langs have special indent rules
+set background=dark
 
-" Softtabs, 2 spaces
+" INDENTATION
+set autoindent
+set smartindent
+set smarttab
 set tabstop=2
 set shiftwidth=2
+set softtabstop=2
 set shiftround
 set expandtab
 
@@ -23,7 +31,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'preservim/nerdcommenter'
 Plug 'jceb/vim-orgmode'
 
-" AIRLINE
+" AESTHETICS
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
