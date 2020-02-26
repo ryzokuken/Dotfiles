@@ -61,10 +61,16 @@ let g:NERDSpaceDelims = 1         " add spaces after comment delimiters by defau
 let g:NERDCompactSexyComs = 1     " use compact syntax for prettified multi-line comments
 let g:NERDDefaultAlign = 'left'   " align line-wise comment delimiters flush left instead of following code indentation
 
+" EasyMotion
+let g:EasyMotion_do_mapping = 0       " disable default mappings
+nmap s <Plug>(easymotion-overwin-f)   " jump to anywhere you want with s
+let g:EasyMotion_smartcase = 1        " turn on case-insensitive feature
+map <Leader>j <Plug>(easymotion-j)    " line motion down
+map <Leader>k <Plug>(easymotion-k)    " line motion up
+
 " KEYMAPS
 
-" C-p for fzf
-map <C-p> :FZF<CR>
+map <C-p> :FZF<CR> " C-p for fzf
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
