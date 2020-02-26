@@ -41,6 +41,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'jceb/vim-orgmode'
 
 " AESTHETICS
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'mengelbrecht/lightline-bufferline'
@@ -68,6 +69,10 @@ nmap s <Plug>(easymotion-overwin-f)   " jump to anywhere you want with s
 let g:EasyMotion_smartcase = 1        " turn on case-insensitive feature
 map <Leader>j <Plug>(easymotion-j)    " line motion down
 map <Leader>k <Plug>(easymotion-k)    " line motion up
+
+" Dracula Theme
+syntax on
+colorscheme dracula
 
 " KEYMAPS
 
