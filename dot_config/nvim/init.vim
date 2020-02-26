@@ -48,6 +48,7 @@ Plug 'mengelbrecht/lightline-bufferline'
 " LANGUAGE
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'mboughaba/i3config.vim'
 
 call plug#end()
 
