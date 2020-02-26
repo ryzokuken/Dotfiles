@@ -76,8 +76,12 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -86,22 +90,13 @@ else
   export EDITOR='nvim'
 fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias login=~/.caa/caa
-alias src="source ~/.zshrc"
-alias vim=nvim
-
-[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
-
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh # Z
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Aliases
+alias login=~/.caa/caa
+alias src="source ~/.zshrc"
+alias cfg="$EDITOR ~/.zshrc"
+alias vim=nvim
+alias c=chezmoi
