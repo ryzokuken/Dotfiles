@@ -1,0 +1,6 @@
+[user]
+	email = ryzokuken@disroot.org
+	name = Ujjwal Sharma
+	signingkey = AC393553FA6242650F39C01E1FD3B47B83F46621
+[commit]
+	gpgsign = true
