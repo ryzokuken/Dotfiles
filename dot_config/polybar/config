@@ -127,6 +127,8 @@ label-urgent-padding = 2
 type = custom/script
 exec = ~/Software/polybar-scripts/polybar-scripts/updates-arch-combined/updates-arch-combined.sh
 interval = 600
+format-underline = ${colors.purple}
+format-prefix = "  "
 
 [module/github]
 type = internal/github
