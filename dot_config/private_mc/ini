@@ -86,7 +86,7 @@ skin=asterisk
 
 [Layout]
 output_lines=0
-left_panel_size=45
+left_panel_size=90
 top_panel_size=0
 message_visible=true
 keybar_visible=true
