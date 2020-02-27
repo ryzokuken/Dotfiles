@@ -13,6 +13,7 @@ set background=dark                 " just in case...
 set noshowmode                      " don't need it because lightline
 autocmd BufWritePre * :%s/\s\+$//e  " trailing whitespace is an embarassment
 set showtabline=2                   " show tabline always
+set termguicolors
 
 " INDENTATION
 set autoindent
@@ -39,9 +40,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/nerdcommenter'
 Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-surround'
 
 " AESTHETICS
-Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'effkay/argonaut.vim'
+" Plug 'haishanh/night-owl.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'mengelbrecht/lightline-bufferline'
@@ -70,12 +74,10 @@ let g:EasyMotion_smartcase = 1        " turn on case-insensitive feature
 map <Leader>j <Plug>(easymotion-j)    " line motion down
 map <Leader>k <Plug>(easymotion-k)    " line motion up
 
-" Dracula Theme
 syntax on
-colorscheme dracula
+colorscheme default
 
 " KEYMAPS
-
 map <C-p> :FZF<CR> " C-p for fzf
 
 " Quicker window movement
