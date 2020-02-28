@@ -4,9 +4,10 @@ set $mod Mod4
 
 font pango:Roboto Sans 10
 
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/Downloads/stretched-2559-1440-699273.png # set up system lock
-exec --no-startup-id nm-applet " start NetworkManager applet
-exec --no-startup-id blueman-applet " start bluetooth applet
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -n -b -i ~/Pictures/Wallpapers/wp2003022-firewatch-wallpapers.png -c f000ff -e -f
+exec --no-startup-id nm-applet # start NetworkManager applet
+exec --no-startup-id blueman-applet # start bluetooth applet
+exec --no-startup-id kdeconnect-indicator # start kdeconnect
 exec --no-startup-id dropbox # start dropbox
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent # start geoclue agent for Redshift location
 exec --no-startup-id redshift-gtk # start redshift
