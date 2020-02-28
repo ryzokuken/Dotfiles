@@ -71,7 +71,7 @@ font-0 = Roboto Sans:style=Regular:size=14
 font-1 = FontAwesome:style=Regular:size=16
 
 modules-left = date filesystem memory cpu github updates
-modules-center = player-mpris-tail
+modules-center = player
 modules-right =
 
 tray-position = right
@@ -138,13 +138,13 @@ interval = 600
 label =   %notifications%
 label-underline = ${colors.skyblue}
 
-[module/player-mpris-tail]
+[module/player]
 type = custom/script
-exec = ~/Software/polybar-scripts/polybar-scripts/player-mpris-tail/player-mpris-tail.py -f '{icon}  {artist} - {title}' --icon-playing '' --icon-paused '' --icon-stopped '' --icon-none ''
+exec = ~/.config/polybar/player-mpris-tail.py -f '{icon}  {artist} - {title}' -b chromium --icon-playing '' --icon-paused '' --icon-stopped '' --icon-none ''
 tail = true
-click-left = ~/Software/polybar-scripts/polybar-scripts/player-mpris-tail/player-mpris-tail.py previous &
-click-right = ~/Software/polybar-scripts/polybar-scripts/player-mpris-tail/player-mpris-tail.py next &
-click-middle = ~/Software/polybar-scripts/polybar-scripts/player-mpris-tail/player-mpris-tail.py play-pause &
+click-left = ~/.config/polybar/player-mpris-tail.py previous -b chromium &
+click-right = ~/.config/polybar/player-mpris-tail.py next -b chromium &
+click-middle = ~/.config/polybar/player-mpris-tail.py play-pause -b chromium &
 
 [module/xwindow]
 type = internal/xwindow
