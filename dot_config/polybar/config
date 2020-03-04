@@ -32,12 +32,12 @@ padding-right = 2
 module-margin-left = 3
 module-margin-right = 0
 
-font-0 = Roboto Sans:style=Regular:size=14
+font-0 = Fira Mono:style=Regular:size=14
 font-1 = FontAwesome:style=Regular:size=14
 
 modules-left = i3
-modules-center = xwindow
-modules-right = backlight pulseaudio wlan eth battery clock
+modules-center = calendar
+modules-right = backlight pulseaudio wlan eth battery
 
 wm-restack = i3
 
@@ -67,10 +67,11 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = Roboto Sans:style=Regular:size=14
+font-0 = Fira Mono:style=Regular:size=14
 font-1 = FontAwesome:style=Regular:size=16
+font-2 = Weather Icons:style=Regular:size=14
 
-modules-left = date filesystem memory cpu github updates
+modules-left = filesystem memory cpu github updates kernel aqi weather
 modules-center = player
 modules-right =
 
@@ -95,7 +96,7 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
-label-mode-padding = 2
+label-mode-padding = 1
 label-mode-foreground = #000
 label-mode-background = ${colors.yellow}
 
@@ -103,11 +104,11 @@ label-mode-background = ${colors.yellow}
 label-focused = %index%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.yellow}
-label-focused-padding = 2
+label-focused-padding = 1
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
-label-unfocused-padding = 2
+label-unfocused-padding = 1
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %index%
@@ -118,37 +119,64 @@ label-visible-padding = ${self.label-focused-padding}
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
 label-urgent-background = ${colors.red}
-label-urgent-padding = 2
+label-urgent-padding = 1
 
 ; Separator in between workspaces
 ; label-separator = |
 
+[module/calendar]
+type = custom/script
+exec = ~/.config/polybar/popup-calendar.sh
+interval = 5
+click-left = ~/.config/polybar/popup-calendar.sh --popup &
+format-underline = ${colors.blue}
+
+[module/weather]
+type = custom/script
+exec = ~/.config/polybar/openweathermap-simple.sh
+interval = 600
+label-font = 3
+format-underline = ${colors.green}
+
+[module/aqi]
+type = custom/script
+exec = ~/.config/polybar/info-airqualityindex.sh
+interval = 600
+format-underline = ${colors.yellow}
+
+[module/kernel]
+type = custom/script
+exec = uname -r
+interval = 1024
+format-prefix = " "
+format-underline = ${colors.blue}
+
 [module/updates]
 type = custom/script
-exec = ~/Software/polybar-scripts/polybar-scripts/updates-arch-combined/updates-arch-combined.sh
+exec = ~/.config/polybar/updates-arch-combined.sh
 interval = 600
 format-underline = ${colors.purple}
-format-prefix = "  "
+format-prefix = " "
 
 [module/github]
 type = internal/github
 token = ${file:~/github-token}
 empty-notifications = false
 interval = 600
-label =   %notifications%
+label =  %notifications%
 label-underline = ${colors.skyblue}
 
 [module/player]
 type = custom/script
-exec = ~/.config/polybar/player-mpris-tail.py -f '{icon}  {artist} - {title}' -b chromium --icon-playing '' --icon-paused '' --icon-stopped '' --icon-none ''
+exec = ~/.config/polybar/player-mpris-tail.py -f '{icon} {artist} - {title}' -b chromium --icon-playing '' --icon-paused '' --icon-stopped '' --icon-none ''
 tail = true
 click-left = ~/.config/polybar/player-mpris-tail.py previous -b chromium &
 click-right = ~/.config/polybar/player-mpris-tail.py next -b chromium &
 click-middle = ~/.config/polybar/player-mpris-tail.py play-pause -b chromium &
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:100:...%
+; [module/xwindow]
+; type = internal/xwindow
+; label = %title:0:100:...%
 
 [module/filesystem]
 type = internal/fs
@@ -156,24 +184,24 @@ interval = 25
 
 mount-0 = /
 
-format-mounted-prefix = "  "
+format-mounted-prefix = " "
 format-mounted-underline = ${colors.yellow}
 label-mounted = %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+; [module/mpd]
+; type = internal/mpd
+; format-online = <label-song> <icon-prev> <icon-stop> <toggle> <icon-next>
 
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
+; icon-prev = 
+; icon-stop = 
+; icon-play = 
+; icon-pause = 
+; icon-next = 
 
-label-song-maxlen = 25
-label-song-ellipsis = true
+; label-song-maxlen = 25
+; label-song-ellipsis = true
 
 [module/backlight]
 type = internal/backlight
@@ -196,14 +224,14 @@ bar-empty-foreground = ${colors.foreground-alt}
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "  "
+format-prefix = " "
 format-underline = ${colors.red}
 label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "  "
+format-prefix = " "
 format-underline = ${colors.green}
 label = %percentage_used%%
 
@@ -212,7 +240,7 @@ type = internal/network
 interface = wlp0s20f3
 interval = 3.0
 
-format-connected =   <label-connected>
+format-connected =  <label-connected>
 format-connected-underline = ${colors.skyblue}
 label-connected = %essid%
 
@@ -237,23 +265,23 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-[module/clock]
-type = internal/date
-interval = 5
-time = %I:%M %p
-time-alt = %H:%M:%S
-format-prefix = "  "
-format-underline = ${colors.blue}
-label = %time%
+; [module/clock]
+; type = internal/date
+; interval = 5
+; time = %I:%M %p
+; time-alt = %H:%M:%S
+; format-prefix = " "
+; format-underline = ${colors.blue}
+; label = %time%
 
-[module/date]
-type = internal/date
-interval = 100
-date = %a %e %b
-date-alt = %H:%M:%S
-format-prefix = "  "
-format-underline = ${colors.blue}
-label = %date%
+; [module/date]
+; type = internal/date
+; interval = 100
+; date = %a %e %b
+; date-alt = %H:%M:%S
+; format-prefix = " "
+; format-underline = ${colors.blue}
+; label = %date%
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -289,15 +317,15 @@ adapter = AC
 full-at = 98
 time-format = %H:%M
 
-format-charging = <animation-charging>  <label-charging>
+format-charging = <animation-charging> <label-charging>
 format-charging-underline = ${colors.green}
 label-charging = %percentage%% (%time%)
 
-format-discharging = <ramp-capacity>  <label-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 label-discharging = %percentage%% (%time%)
 
-format-full-prefix = "  "
+format-full-prefix = " "
 ; format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
