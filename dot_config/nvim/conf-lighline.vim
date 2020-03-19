@@ -1,5 +1,5 @@
 let g:lightline = {
-  \ 'colorscheme': 'OldHope',
+  \ 'colorscheme': 'onedark',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
 	\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ],
@@ -7,6 +7,8 @@ let g:lightline = {
 	\ 'component_function': {
 	\   'cocstatus': 'coc#status'
 	\ },
+  \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+  \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
   \ }
 let g:lightline.component_expand = {
   \  'linter_checking': 'lightline#ale#checking',
@@ -23,3 +25,10 @@ let g:lightline.component_type = {
   \     'linter_ok': 'right',
   \ }
 let g:lightline.active = { 'right': [[ 'lineinfo' ], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype' ], [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ]] }
+
+" bufferline
+let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
+
+let g:lightline#bufferline#show_number = 1
