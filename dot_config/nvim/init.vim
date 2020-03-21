@@ -10,11 +10,12 @@ set showcmd                             " show incomplete commands
 filetype plugin on                      " filetypes are nice
 filetype indent on                      " some langs have special indent rules
 set background=dark                     " just in case...
-set noshowmode                          " don't need it because lightline
+set noshowmode                          " don't need it because ~lightline~ airline
 autocmd BufWritePre * :%s/\s\+$//e      " trailing whitespace is an embarassment
 set showtabline=2                       " show tabline always
 let mapleader = "\<Space>"              " set leader to space
 let maplocalleader = "\<Space>\<Space>" " set local leader to space-space
+set foldmethod=indent                   " fold code based on indentation
 
 " INDENTATION
 set autoindent
@@ -50,15 +51,12 @@ Plug 'mattn/calendar-vim'
 
 " AESTHETICS
 Plug 'joshdick/onedark.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
-Plug 'mengelbrecht/lightline-bufferline'
+Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
 
 " LANGUAGE
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" Plug 'mboughaba/i3config.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-git'
 
@@ -71,8 +69,13 @@ colorscheme onedark                 " OneDark from Atom
 
 " PLUGIN CONFIGURATION
 
-source ~/.config/nvim/conf-lighline.vim   " source lightline configuration
+" source ~/.config/nvim/conf-lighline.vim   " source lightline configuration
 source ~/.config/nvim/conf-coc.vim        " source coc configuration
+
+" Airline
+let g:airline_theme='onedark' " just in case...
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
 " NERDCommenter
 let g:NERDSpaceDelims = 1         " add spaces after comment delimiters by default
@@ -90,8 +93,8 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
 " KEYMAPS
-" C-p for fzf
-map <C-p> :FZF<CR>
+" C-p for files
+map <C-p> :Files<CR>
 " C-b for buffers
 map <C-b> :Buffers<CR>
 
@@ -101,26 +104,11 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" Mappings to access buffers (don't use "\p" because a
-" delay before pressing "p" would accidentally paste).
-" \l       : list buffers
-" \b \f \g : go back/forward/last-used
-" \1 \2 \3 : go to buffer 1/2/3 etc
-nnoremap <Leader>l :ls<CR>
-nnoremap <Leader>b :bp<CR>
-nnoremap <Leader>f :bn<CR>
-nnoremap <Leader>g :e#<CR>
-nnoremap <Leader>1 :1b<CR>
-nnoremap <Leader>2 :2b<CR>
-nnoremap <Leader>3 :3b<CR>
-nnoremap <Leader>4 :4b<CR>
-nnoremap <Leader>5 :5b<CR>
-nnoremap <Leader>6 :6b<CR>
-nnoremap <Leader>7 :7b<CR>
-nnoremap <Leader>8 :8b<CR>
-nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
+" Buffer switching and closing
+map <M-Left> :bp<CR>
+map <M-Right> :bn<CR>
+map <C-w> :bd<CR>
 
 let g:ale_linters = {'python': ['flake8'], 'javascript': ['eslint']}
-let g:ale_fixers = {'python': ['black'], 'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {'python': ['black'], 'javascript': ['prettier', 'eslint'], 'json': ['prettier']}
 let g:ale_fix_on_save = 1
