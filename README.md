@@ -4,12 +4,12 @@
 
 These are my dotfiles for the various services I use on my computer. If you
 feel like I might be missing something, or that smething is amiss, feel free to
-(file an issue)[https://github.com/ryzokuken/Dotfiles/issues/new].
+[ file an issue ]( https://github.com/ryzokuken/Dotfiles/issues/new ).
 
 ## Get my dotfiles
 
 These dotfiles have been managed by the dotfile management tool,
-(chezmoi)[https://github.com/twpayne/chezmoi]. You can get them immediately
+[ chezmoi ]( https://github.com/twpayne/chezmoi ). You can get them immediately
 through the following sequence of commands.
 
 ```shell
