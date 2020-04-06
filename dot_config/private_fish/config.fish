@@ -1,10 +1,14 @@
-alias c chezmoi
-alias login "~/.caa/caa --stop && ~/.caa/caa --daemon"
-set -x GPG_TTY (tty)
+set -gx GPG_TTY (tty)
+set -gx EDITOR nvim
 
-# One editor to rule them all
-set EDITOR nvim
-alias vi="nvim"
-alias vim="nvim"
+alias c chezmoi
+alias vi nvim
+alias vim nvim
+alias ls lsd
+alias cat bat
 
 thefuck --alias | source
+
+function prs
+  curl --data-binary @$argv https://paste.rs/
+end
