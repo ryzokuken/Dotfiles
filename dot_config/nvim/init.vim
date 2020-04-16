@@ -115,3 +115,7 @@ map <M-w> :bd<CR>
 let g:ale_linters = {'python': ['flake8'], 'javascript': ['eslint']}
 let g:ale_fixers = {'python': ['black'], 'javascript': ['prettier', 'eslint'], 'json': ['prettier']}
 let g:ale_fix_on_save = 1
+
+autocmd FileType gitcommit,mail,markdown setlocal spell
+autocmd BufRead,BufNewFile *.md set conceallevel=0
+autocmd FileType markdown set conceallevel=0
