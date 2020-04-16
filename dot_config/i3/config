@@ -62,9 +62,9 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # dmenu
-bindsym $mod+d exec --no-startup-id "rofi -font \\"fira code 16\\" -show drun -theme base16-default-dark"
-bindsym $mod+Shift+d exec --no-startup-id "rofi -font \\"fira code 16\\" -show window -theme base16-default-dark"
-bindsym $mod+e exec --no-startup-id "rofimoji --rofi-args='-font \\"fira code 16\\" -theme base16-default-dark'"
+bindsym $mod+d exec --no-startup-id "rofi -show drun"
+bindsym $mod+Shift+d exec --no-startup-id "rofi -show window"
+bindsym $mod+e exec --no-startup-id "rofimoji"
 
 # change focus
 bindsym $mod+j focus left
