@@ -13,3 +13,12 @@ thefuck --alias | source
 function prs
   curl --data-binary @$argv https://paste.rs/
 end
+
+function fish_title
+  set title (status current-command)
+  if [ "$title" = "fish" ]
+    echo (pwd)
+  else
+    echo $argv
+  end
+end
