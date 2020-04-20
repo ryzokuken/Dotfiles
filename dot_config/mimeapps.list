@@ -1,5 +1,4 @@
 [Added Associations]
-application/pdf=org.gnome.Evince.desktop;okularApplication_pdf.desktop;
 application/x-extension-htm=userapp-Firefox-7AYMF0.desktop;
 application/x-extension-html=userapp-Firefox-7AYMF0.desktop;
 application/x-extension-shtml=userapp-Firefox-7AYMF0.desktop;
@@ -66,7 +65,7 @@ video/avi=vlc.desktop;
 video/x-mpeg-system=vlc.desktop;
 
 [Default Applications]
-application/pdf=okularApplication_pdf.desktop
+application/pdf=llpp.desktop
 application/x-extension-htm=userapp-Firefox-7AYMF0.desktop
 application/x-extension-html=userapp-Firefox-7AYMF0.desktop
 application/x-extension-shtml=userapp-Firefox-7AYMF0.desktop
