@@ -47,6 +47,7 @@ Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
+Plug 'majutsushi/tagbar'
 
 " ORG MODE
 " Plug 'jceb/vim-orgmode'
