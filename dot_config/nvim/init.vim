@@ -17,6 +17,7 @@ let mapleader = "\<Space>"              " set leader to space
 let maplocalleader = "\<Space>\<Space>" " set local leader to space-space
 set foldmethod=indent                   " fold code based on indentation
 set nofoldenable                        " but not by default
+set cursorline                          " highlight the line on which the curor is placed
 
 " INDENTATION
 set autoindent
