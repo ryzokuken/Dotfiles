@@ -31,11 +31,16 @@ exec --no-startup-id feh --bg-center ~/Pictures/Wallpapers/wp1810645-mr-robot-wa
 # Autostart
 exec --no-startup-id picom # start compositor
 exec --no-startup-id dunst # start notifications daemon
+exec --no-startup-id clipmenud # start clipmenu daemon
 exec --no-startup-id mpris-proxy # for bluetooth headphone media control
 exec --no-startup-id nm-applet # network manager applet
 exec --no-startup-id blueman-applet # bluetooth manager applet
+exec --no-startup-id pasystray # pulseaudio applet
+exec --no-startup-id kdeconnect-indicator # kdeconnect indicator
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent # start geoclue for redshift
 exec --no-startup-id redshift-gtk # redshift w/ applet
+exec nextcloud # nextcloud
+exec --no-startup-id unclutter --timeout 1 # hide mouse cursor
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
