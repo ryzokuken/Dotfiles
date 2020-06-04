@@ -227,6 +227,7 @@ set $base0F #a16946
 bar {
     status_command i3status-rs
     position top
+    tray_padding 0
 
     colors {
         background $base00
