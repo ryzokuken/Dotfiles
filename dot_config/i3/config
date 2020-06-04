@@ -199,6 +199,8 @@ bindsym $mod+r mode "resize"
 bindsym --release Print exec --no-startup-id shotgun ~/Pictures/Screenshots/$(date +%s).png
 bindsym --release Shift+Print exec --no-startup-id shotgun $(slop -f "-i %i -g %g") ~/Pictures/Screenshots/$(date +%s).png
 
+hide_edge_borders smart
+
 ## Base16 Default Dark
 # Author: Chris Kempson (http://chriskempson.com)
 #
