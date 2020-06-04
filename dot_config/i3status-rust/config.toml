@@ -8,6 +8,10 @@ format = "{weather} {temp}°"
 service = { name = "openweathermap", city_id = "1261481", units = "metric" }
 
 [[block]]
+block = "github"
+format = "{total}|{author}|{comment}|{mention}|{review_requested}"
+
+[[block]]
 block = "pacman"
 
 [[block]]
