@@ -3,9 +3,9 @@
 icons = "awesome"
 
 [[block]]
-block = "maildir"
-interval = 60
-inboxes = ["/home/ryzokuken/mail/igalia/INBOX", "/home/ryzokuken/mail/disroot/INBOX"]
+block = "weather"
+format = "{weather} {temp}°"
+service = { name = "openweathermap", city_id = "1261481", units = "metric" }
 
 [[block]]
 block = "pacman"
@@ -20,28 +20,24 @@ block = "music"
 player = "spotify"
 
 [[block]]
-block = "net"
-device = "wlp0s20f3"
-ssid = true
-signal_strength = true
-speed_up = false
-speed_down = false
-
-[[block]]
 block = "backlight"
-device = "intel_backlight"
 
 [[block]]
 block = "sound"
 
 [[block]]
+block = "net"
+device = "wlp0s20f3"
+ssid = true
+speed_up = false
+speed_down = false
+
+[[block]]
 block = "battery"
-format = "{percentage}% {time} ({power})"
+format = "{percentage}% ({time})"
 
 [[block]]
 block = "time"
-interval = 60
-format = "%a %d/%m %R"
 
 # base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
 # Default Dark by Chris Kempson (http://chriskempson.com)
