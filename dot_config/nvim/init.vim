@@ -121,5 +121,5 @@ let g:ale_fix_on_save = 1
 let g:ale_rust_cargo_use_clippy = 1
 
 autocmd FileType gitcommit,mail,markdown setlocal spell
-autocmd BufRead,BufNewFile *.md set conceallevel=0
-autocmd FileType markdown set conceallevel=0
+
+let g:indentLine_fileTypeExclude = ['markdown']
