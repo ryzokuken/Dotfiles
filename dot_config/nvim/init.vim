@@ -84,6 +84,7 @@ source ~/.config/nvim/conf-coc.vim        " source coc configuration
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_skip_empty_sections = 1
 
 " NERDCommenter
 let g:NERDSpaceDelims = 1         " add spaces after comment delimiters by default
