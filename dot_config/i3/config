@@ -225,7 +225,7 @@ set $base0F #a16946
 
 # Basic bar configuration using the Base16 variables.
 bar {
-    status_command i3status-rs ~/.config/i3status-rust/config
+    status_command i3status-rs
     position top
 
     colors {
