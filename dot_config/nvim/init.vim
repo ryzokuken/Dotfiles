@@ -123,3 +123,9 @@ let g:ale_rust_cargo_use_clippy = 1
 autocmd FileType gitcommit,mail,markdown setlocal spell
 
 let g:indentLine_fileTypeExclude = ['markdown']
+
+" Disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
