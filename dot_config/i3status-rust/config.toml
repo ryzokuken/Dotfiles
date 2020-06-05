@@ -1,15 +1,15 @@
 # vim:ft=toml
 
 icons = "awesome"
+scrolling = "natural"
 
 [[block]]
 block = "weather"
-format = "{weather} {temp}°"
 service = { name = "openweathermap", city_id = "1261481", units = "metric" }
 
 [[block]]
 block = "github"
-format = "{total}|{author}|{comment}|{mention}|{review_requested}"
+format = "{total} A{author} C{comment} M{mention} R{review_requested}"
 
 [[block]]
 block = "pacman"
@@ -21,7 +21,6 @@ label = " Sennheiser"
 
 [[block]]
 block = "music"
-player = "spotify"
 
 [[block]]
 block = "backlight"
