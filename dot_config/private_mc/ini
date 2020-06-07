@@ -82,11 +82,11 @@ editor_backup_extension=~
 editor_filesize_threshold=64M
 editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
-skin=asterisk
+skin=default
 
 [Layout]
 output_lines=0
-left_panel_size=90
+left_panel_size=45
 top_panel_size=0
 message_visible=true
 keybar_visible=true
@@ -113,6 +113,10 @@ clipboard_paste=
 base_color=
 xterm-256color=
 color_terminals=
+
+tmux-256color=
+
+alacritty=
 
 [Panels]
 show_mini_info=true
