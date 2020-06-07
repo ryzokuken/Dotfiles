@@ -31,11 +31,9 @@ block = "backlight"
 block = "sound"
 
 [[block]]
-block = "net"
-device = "wlp0s20f3"
-ssid = true
-speed_up = false
-speed_down = false
+block = "networkmanager"
+on_click = "alacritty -e nmtui"
+device_format= "{icon}{ap}"
 
 [[block]]
 block = "battery"

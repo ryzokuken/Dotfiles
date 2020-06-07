@@ -33,7 +33,6 @@ exec --no-startup-id picom # start compositor
 exec --no-startup-id dunst # start notifications daemon
 exec --no-startup-id clipmenud # start clipmenu daemon
 exec --no-startup-id mpris-proxy # for bluetooth headphone media control
-exec --no-startup-id nm-applet # network manager applet
 exec --no-startup-id blueman-applet # bluetooth manager applet
 exec --no-startup-id pasystray # pulseaudio applet
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent # start geoclue for redshift
