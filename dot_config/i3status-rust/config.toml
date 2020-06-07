@@ -4,6 +4,9 @@ icons = "awesome"
 scrolling = "natural"
 
 [[block]]
+block = "kdeconnect"
+
+[[block]]
 block = "weather"
 service = { name = "openweathermap", city_id = "1261481", units = "metric" }
 

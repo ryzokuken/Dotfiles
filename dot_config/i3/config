@@ -36,7 +36,6 @@ exec --no-startup-id mpris-proxy # for bluetooth headphone media control
 exec --no-startup-id nm-applet # network manager applet
 exec --no-startup-id blueman-applet # bluetooth manager applet
 exec --no-startup-id pasystray # pulseaudio applet
-exec --no-startup-id kdeconnect-indicator # kdeconnect indicator
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent # start geoclue for redshift
 exec --no-startup-id redshift-gtk # redshift w/ applet
 exec nextcloud # nextcloud
