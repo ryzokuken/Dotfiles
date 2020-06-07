@@ -5,6 +5,7 @@ scrolling = "natural"
 
 [[block]]
 block = "kdeconnect"
+format = "{bat_icon}"
 
 [[block]]
 block = "weather"
@@ -12,7 +13,6 @@ service = { name = "openweathermap", city_id = "1261481", units = "metric" }
 
 [[block]]
 block = "github"
-format = "{total} A{author} C{comment} M{mention} R{review_requested}"
 
 [[block]]
 block = "pacman"
@@ -20,7 +20,6 @@ block = "pacman"
 [[block]]
 block = "bluetooth"
 mac = "00:16:94:41:63:83"
-label = " Sennheiser"
 
 [[block]]
 block = "music"
