@@ -64,7 +64,7 @@ Plug 'edkolev/tmuxline.vim'
 
 " LANGUAGE
 Plug 'rust-lang/rust.vim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-git'
 Plug 'godlygeek/tabular'
