@@ -5,7 +5,7 @@ scrolling = "natural"
 
 [[block]]
 block = "kdeconnect"
-format = "{name} {bat_icon}{bat_charge}%"
+format = "{name} {bat_icon} {bat_charge}%"
 
 [[block]]
 block = "weather"
