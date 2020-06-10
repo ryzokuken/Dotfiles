@@ -6,3 +6,5 @@
 	gpgsign = true
 [core]
 	excludesFile = /home/ryzokuken/.gitignore
+[pull]
+	ff = only
