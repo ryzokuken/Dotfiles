@@ -67,6 +67,7 @@ bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons
 bindsym $mod+Shift+d exec --no-startup-id rofi -show window
 bindsym $mod+e exec --no-startup-id rofimoji -s neutral
 bindsym $mod+c exec --no-startup-id CM_LAUNCHER=rofi clipmenu
+bindsym $mod+p exec --no-startup-id ~/.config/i3/lpass-rofi.sh copy
 
 # change focus
 bindsym $mod+j focus left
