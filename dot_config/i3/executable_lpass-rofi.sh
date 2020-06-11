@@ -127,7 +127,7 @@ if [ -z "${selid}" ]; then
 fi
 
 if [ "${subcommand}" == 'type' ]; then
-  lpass show "--${lpass_field}" "${selid}" | xdotool -
+  lpass show "--${lpass_field}" "${selid}" | xargs xdotool type
 else
   # Result to clipboard
   lpass show --clip "--${lpass_field}" "${selid}"
