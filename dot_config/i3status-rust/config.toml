@@ -4,6 +4,14 @@ icons = "awesome"
 scrolling = "natural"
 
 [[block]]
+block = "maildir"
+interval = 30
+inboxes = ["/home/ryzokuken/mail/igalia/INBOX", "/home/ryzokuken/mail/disroot/INBOX"]
+threshold_warning = 10
+threshold_critical = 20
+display_type = "all"
+
+[[block]]
 block = "kdeconnect"
 format = "{name} {bat_icon} {bat_charge}%"
 
