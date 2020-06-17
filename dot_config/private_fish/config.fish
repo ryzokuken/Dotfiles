@@ -13,6 +13,10 @@ function prs
   curl --data-binary @$argv https://paste.rs/
 end
 
+function url
+  curl -F"shorten=$argv" http://0x0.st
+end
+
 function fish_title
   set title (status current-command)
   if [ "$title" = "fish" ]
