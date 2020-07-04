@@ -115,7 +115,7 @@ map <M-Left> :bp<CR>
 map <M-Right> :bn<CR>
 map <M-w> :bd<CR>
 
-let g:ale_linters = {'python': ['flake8'], 'javascript': ['eslint']}
+let g:ale_linters = {'python': ['flake8'], 'javascript': ['eslint', 'tsserver']}
 let g:ale_fixers = {'python': ['black'], 'javascript': ['prettier', 'eslint'], 'json': ['prettier'], 'rust': ['rustfmt'], 'html': ['prettier']}
 let g:ale_fix_on_save = 1
 let g:ale_rust_cargo_use_clippy = 1
