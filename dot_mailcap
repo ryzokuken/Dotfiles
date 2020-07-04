@@ -1,2 +1,3 @@
 text/html; w3m -dump -o -document_charset=%{charset} %s; nametemplate=%s.html; copiousoutput
-text/calendar; ~/.neomutt/mutt_ics.py; copiousoutput; print=khal import --batch
+text/calendar; ~/.neomutt/mutt_ics.py; copiousoutput; print=khal import %s; needsterminal
+application/ics; ~/.neomutt/mutt_ics.py; copiousoutput; print=khal import %s; needsterminal
