@@ -196,6 +196,20 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+set $mode_display Display (1) Single (2) HDMI 1080p 1.5x (3) HDMI 1080p 1.0x
+mode "$mode_display" {
+    bindsym 1 exec --no-startup-id xrandr --output eDP-1 --auto --primary --output HDMI-1 --off, mode "default"
+    bindsym 2 exec --no-startup-id xrandr --output HDMI-1 --scale 1.5x1.5 --auto --primary --output eDP-1 --auto --right-of HDMI-1, mode "default"
+    bindsym 3 exec --no-startup-id xrandr --output HDMI-1 --scale 1.0x1.0 --auto --primary --output eDP-1 --auto --right-of HDMI-1, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym XF86Display mode "default"
+}
+# Declare here the shortcut to bring the display selection menu
+bindsym XF86Display mode "$mode_display"
+
 bindsym --release Print exec --no-startup-id shotgun ~/Pictures/Screenshots/$(date +%s).png
 bindsym --release Shift+Print exec --no-startup-id shotgun $(slop -f "-i %i -g %g") ~/Pictures/Screenshots/$(date +%s).png
 
