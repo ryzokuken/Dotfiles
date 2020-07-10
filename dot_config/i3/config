@@ -25,7 +25,7 @@ title_align center
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock -l -- betterlockscreen --lock
+exec --no-startup-id xss-lock -l -- multilockscreen --lock
 exec --no-startup-id feh --bg-center ~/Pictures/Wallpapers/wp1810645-mr-robot-wallpapers.jpg
 
 # Autostart
