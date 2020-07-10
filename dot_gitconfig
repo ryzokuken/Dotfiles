@@ -8,3 +8,5 @@
 	excludesFile = /home/ryzokuken/.gitignore
 [pull]
 	ff = only
+[http]
+	cookiefile = /home/ryzokuken/.gitcookies
