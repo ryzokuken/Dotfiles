@@ -15,11 +15,6 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term alacritty
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-# set $menu dmenu_path | bemenu --fn "Fira Code Retina 10" | xargs swaymsg exec --
-set $menu wofi --show drun
 
 ### Output configuration
 #
@@ -42,6 +37,8 @@ output eDP-1 {
 
 xwayland scale 2
 exec xsettingsd
+
+exec --no-startup-id /usr/lib/kdeconnectd
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -98,7 +95,7 @@ input "1739:52619:SYNA8004:00_06CB:CD8B_Touchpad" {
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+d exec 'rofi -show drun'
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -245,6 +242,7 @@ client.background       $base07
 bar {
   position top
   status_padding 0
+  tray_padding 0
 
   # When the status_command prints a new line to stdout, swaybar updates.
   # The default just shows the current date and time.
