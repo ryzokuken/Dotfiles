@@ -179,41 +179,41 @@ bindsym $mod+x [urgent=latest] focus
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+  # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym j resize shrink width 10 px or 10 ppt
+  bindsym k resize grow height 10 px or 10 ppt
+  bindsym l resize shrink height 10 px or 10 ppt
+  bindsym semicolon resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+  # same bindings, but for the arrow keys
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+  # back to normal: Enter or Escape or $mod+r
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
 
 set $mode_display Display (1) Single (2) HDMI 1080p 1.5x (3) HDMI 1080p 1.0x
 mode "$mode_display" {
-    bindsym 1 exec --no-startup-id xrandr --output eDP-1 --auto --primary --output HDMI-1 --off, mode "default"
-    bindsym 2 exec --no-startup-id xrandr --output HDMI-1 --scale 1.5x1.5 --auto --primary --output eDP-1 --auto --right-of HDMI-1, mode "default"
-    bindsym 3 exec --no-startup-id xrandr --output HDMI-1 --scale 1.0x1.0 --auto --primary --output eDP-1 --auto --right-of HDMI-1, mode "default"
+  bindsym 1 exec --no-startup-id xrandr --output eDP-1 --auto --primary --output HDMI-1 --off, mode "default"
+  bindsym 2 exec --no-startup-id xrandr --output HDMI-1 --scale 1.5x1.5 --auto --primary --output eDP-1 --auto --right-of HDMI-1, mode "default"
+  bindsym 3 exec --no-startup-id xrandr --output HDMI-1 --scale 1.0x1.0 --auto --primary --output eDP-1 --auto --right-of HDMI-1, mode "default"
 
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym XF86Display mode "default"
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym XF86Display mode "default"
 }
 # Declare here the shortcut to bring the display selection menu
 bindsym XF86Display mode "$mode_display"
@@ -247,22 +247,22 @@ set $base0F #a16946
 
 # Basic bar configuration using the Base16 variables.
 bar {
-    status_command i3status-rs
-    position top
-    tray_padding 0
+  status_command i3status-rs
+  position top
+  tray_padding 0
 
-    colors {
-        background $base00
-        separator  $base01
-        statusline $base04
+  colors {
+    background $base00
+    separator  $base01
+    statusline $base04
 
-        # State             Border  BG      Text
-        focused_workspace   $base05 $base0D $base00
-        active_workspace    $base05 $base03 $base00
-        inactive_workspace  $base03 $base01 $base05
-        urgent_workspace    $base08 $base08 $base00
-        binding_mode        $base00 $base0A $base00
-    }
+    # State             Border  BG      Text
+    focused_workspace   $base05 $base0D $base00
+    active_workspace    $base05 $base03 $base00
+    inactive_workspace  $base03 $base01 $base05
+    urgent_workspace    $base08 $base08 $base00
+    binding_mode        $base00 $base0A $base00
+  }
 }
 
 # Basic color configuration using the Base16 variables for windows and borders.
