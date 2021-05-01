@@ -49,18 +49,20 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
 Plug 'majutsushi/tagbar'
+Plug 'wfxr/minimap.vim'
 
 " ORG MODE
 " Plug 'jceb/vim-orgmode'
 " Plug 'mattn/calendar-vim'
 
 " AESTHETICS
-" Plug 'joshdick/onedark.vim'
-Plug 'chriskempson/base16-vim'
+Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
-Plug 'edkolev/tmuxline.vim'
+Plug 'airblade/vim-gitgutter'
+" Plug 'chriskempson/base16-vim'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'edkolev/tmuxline.vim'
 
 " LANGUAGE
 Plug 'rust-lang/rust.vim'
@@ -69,12 +71,15 @@ Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-git'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug '~/Code/google/v8/v8/tools/torque/vim-torque'
+Plug 'mboughaba/i3config.vim'
 
 call plug#end()
 
-set termguicolors                   " 24-bit colors
-syntax on                           " turn on syntax highlighting
-colorscheme base16-default-dark      " G R O O V Y
+syntax on
+let g:onedark_terminal_italics=1
+set termguicolors
+colorscheme onedark
 
 " PLUGIN CONFIGURATION
 
@@ -84,7 +89,8 @@ source ~/.config/nvim/conf-coc.vim        " source coc configuration
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_skip_empty_sections = 1
+" let g:airline_skip_empty_sections = 1
+let g:airline_theme='onedark'
 
 " NERDCommenter
 let g:NERDSpaceDelims = 1         " add spaces after comment delimiters by default
@@ -104,22 +110,38 @@ map <Leader>k <Plug>(easymotion-k)
 " tmuxline
 let g:tmuxline_preset = 'full'
 
-" KEYMAPS
+ " KEYMAPS
 " C-p for files
 map <C-p> :Files<CR>
 " C-b for buffers
 map <C-b> :Buffers<CR>
+" C-t for tags
+map <C-t> :TagbarToggle<CR>
+" C-f for format
+map <C-f> :ALEFix<CR>
 
 " Buffer switching and closing
 map <M-Left> :bp<CR>
 map <M-Right> :bn<CR>
 map <M-w> :bd<CR>
 
-let g:ale_linters = {'python': ['flake8'], 'javascript': ['eslint', 'tsserver'], 'cpp': ['cpplint', 'clangd']}
-let g:ale_fixers = {'python': ['black'], 'javascript': ['prettier', 'eslint'], 'json': ['prettier'], 'rust': ['rustfmt'], 'html': ['prettier']}
+let g:ale_linters = {
+\      'python': ['flake8'],
+\      'javascript': ['eslint', 'tsserver'],
+\      'cpp': ['cpplint', 'clangd'],
+\      'rust': ['analyzer'],
+\}
+let g:ale_fixers = {
+\      'python': ['black'],
+\      'javascript': ['prettier', 'eslint'],
+\      'json': ['prettier'],
+\      'rust': ['rustfmt'],
+\      'html': ['prettier'],
+\      'markdown': ['prettier']
+\}
 let g:ale_rust_cargo_use_clippy = 1
 
-autocmd FileType gitcommit,mail,markdown setlocal spell
+autocmd FileType gitcommit,mail,markdown,asciidoc setlocal spell
 
 let g:indentLine_fileTypeExclude = ['markdown']
 
