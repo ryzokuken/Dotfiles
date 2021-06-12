@@ -49,7 +49,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
 Plug 'majutsushi/tagbar'
-Plug 'wfxr/minimap.vim'
+" Plug 'wfxr/minimap.vim'
 
 " ORG MODE
 " Plug 'jceb/vim-orgmode'

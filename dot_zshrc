@@ -11,12 +11,11 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/sudo
   zgen oh-my-zsh plugins/npm
-  zgen oh-my-zsh themes/bureau
+  # zgen oh-my-zsh themes/mgutz
 
   zgen load eendroroy/zed-zsh
   zgen load zsh-users/zsh-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
-  # zgen load romkatv/powerlevel10k powerlevel10k
 
   # completions
   zgen load zsh-users/zsh-completions src
@@ -38,3 +37,5 @@ function 0x0 () curl -F'file=@$1' https://0x0.st
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 source /usr/share/nvm/init-nvm.sh
+
+eval "$(starship init zsh)"

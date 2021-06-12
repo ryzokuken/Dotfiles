@@ -3,16 +3,16 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: xterm-256color
+  TERM: xterm-256color
 
-#window:
+# window:
   # Window dimensions (changes require restart)
   #
   # Specified in number of columns/lines, not pixels.
@@ -49,7 +49,7 @@
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background, but no title bar buttons
-  #decorations: full
+  # decorations: full
 
   # Startup Mode (changes require restart)
   #
@@ -76,7 +76,7 @@
   #
   # Override the variant of the GTK theme. Commonly supported values are `dark` and `light`.
   # Set this to `None` to use the default theme variant.
-  #gtk_theme_variant: None
+  # gtk_theme_variant: None
 
 #scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -109,13 +109,13 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: FiraCode Nerd Font Mono
+    family: Iosevka Fixed
 
     # The `style` can be specified to pick a specific face.
-    style: Retina
+    # style: Regular
 
   # Bold font face
-  #bold:
+  # bold:
     # Font family
     #
     # If the bold family is not specified, it will fall back to the
@@ -123,10 +123,10 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold
+    # style: Bold
 
   # Italic font face
-  #italic:
+  # italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
@@ -134,10 +134,10 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    #style: Italic
+    # style: Italic
 
   # Bold italic font face
-  #bold_italic:
+  # bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
@@ -145,10 +145,10 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold Italic
+    # style: Bold Italic
 
   # Point size
-  size: 11.5
+  size: 14.5
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -182,42 +182,92 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: true
 
-# Base16 Default Dark - alacritty color config
-# Chris Kempson (http://chriskempson.com)
-colors:
+# Colors
+# colors:
   # Default colors
-  primary:
-    background: '0x181818'
-    foreground: '0xd8d8d8'
+  # primary:
+  #   background: '#1E2127'
+  #   foreground: '#5C6370'
 
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0x181818'
-    cursor: '0xd8d8d8'
+    # Bright and dim foreground colors
+    #
+    # The dimmed foreground color is calculated automatically if it is not present.
+    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+    # is `false`, the normal foreground color will be used.
+    #dim_foreground: '0x9a9a9a'
+    # bright_foreground: '0xe6efff'
+
+  # Cursor colors
+  #
+  # Colors which should be used to draw the terminal cursor. If these are unset,
+  # the cursor color will be the inverse of the cell color.
+  #cursor:
+  #  text: '0x000000'
+  #  cursor: '0xffffff'
 
   # Normal colors
+  # normal:
+  #   black: '#000000'
+  #   red: '#E06C75'
+  #   green: '#98C379'
+  #   yellow: '#D19A66'
+  #   blue: '#61AFEF'
+  #   magenta: '#C678DD'
+  #   cyan: '#56B6C2'
+  #   white: '#ABB2BF'
+
+  # # Bright colors
+  # bright:
+  #   black: '#5C6370'
+  #   red: '#E06C75'
+  #   green: '#98C379'
+  #   yellow: '#D19A66'
+  #   blue: '#61AFEF'
+  #   magenta: '#C678DD'
+  #   cyan: '#56B6C2'
+  #   white: '#FFFEFE'
+
+  # Dim colors
+  #
+  # If the dim colors are not set, they will be calculated automatically based
+  # on the `normal` colors.
+  # dim:
+  #   black: '0x1e2127'
+  #   red: '0xe06c75'
+  #   green: '0x98c379'
+  #   yellow: '0xd19a66'
+  #   blue: '0x61afef'
+  #   magenta: '0xc678dd'
+  #   cyan: '0x56b6c2'
+  #   white: '0x828791'
+
+  # Indexed Colors
+  #
+  # The indexed colors include all colors from 16 to 256.
+  # When these are not set, they're filled with sensible defaults.
+  #indexed_colors:
+  #  - { index: 16, color: '0x000000' }
+
+# Colors (One Dark - https://github.com/atom/atom/tree/master/packages/one-dark-syntax)
+colors:
+  primary:
+    background: '#282c34'
+    foreground: '#abb2bf'
+  cursor:
+    text:       CellBackground
+    cursor:     '#528bff' # syntax-cursor-color
+  selection:
+    text:       CellForeground
+    background: '#3e4451' # syntax-selection-color
   normal:
-    black:   '0x181818'
-    red:     '0xab4642'
-    green:   '0xa1b56c'
-    yellow:  '0xf7ca88'
-    blue:    '0x7cafc2'
-    magenta: '0xba8baf'
-    cyan:    '0x86c1b9'
-    white:   '0xd8d8d8'
-
-  # Bright colors
-  bright:
-    black:   '0x585858'
-    red:     '0xdc9656'
-    green:   '0x282828'
-    yellow:  '0x383838'
-    blue:    '0xb8b8b8'
-    magenta: '0xe8e8e8'
-    cyan:    '0xa16946'
-    white:   '0xf8f8f8'
-
-draw_bold_text_with_bright_colors: false
+    black:      '#5c6370' # mono-3
+    red:        '#e06c75' # red 1
+    green:      '#98c379'
+    yellow:     '#e5c07b' # orange 2
+    blue:       '#61afef'
+    magenta:    '#c678dd'
+    cyan:       '#56b6c2'
+    white:      '#828997' # mono-2
 
 # Visual Bell
 #
@@ -258,7 +308,7 @@ draw_bold_text_with_bright_colors: false
   #save_to_clipboard: false
 
 # Allow terminal applications to change Alacritty's window title.
-dynamic_title: true
+window.dynamic_title: true
 
 #cursor:
   # Cursor style
@@ -489,7 +539,7 @@ dynamic_title: true
 # binding with the same triggers is defined. To unset a default binding, it can
 # be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
 # a no-op if you do not wish to receive input characters for that binding.
-# key_bindings:
+key_bindings:
   # (Windows, Linux, and BSD only)
   #- { key: V,        mods: Control|Shift, action: Paste            }
   #- { key: C,        mods: Control|Shift, action: Copy             }
@@ -501,7 +551,7 @@ dynamic_title: true
   #- { key: Minus,    mods: Control,       action: DecreaseFontSize }
 
   # (Windows only)
-  #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
+  - { key: Return,   mods: Alt,           action: ToggleFullscreen }
 
   # (macOS only)
   #- { key: Key0,   mods: Command,         action: ResetFontSize    }
@@ -526,3 +576,4 @@ dynamic_title: true
   #- { key: PageDown,  mods: Shift,   action: ScrollPageDown, mode: ~Alt       }
   #- { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
   #- { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
+  - { key: N, mods: Control|Shift, action: SpawnNewInstance }
