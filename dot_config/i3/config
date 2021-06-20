@@ -26,14 +26,16 @@ title_align center
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock -l -- multilockscreen --lock
-exec --no-startup-id feh --bg-center ~/Pictures/Wallpapers/wp1810645-mr-robot-wallpapers.jpg
+exec --no-startup-id autorandr --change --force
 
 # Autostart
 exec --no-startup-id picom # start compositor
 exec --no-startup-id dunst # start notifications daemon
 exec --no-startup-id clipmenud # start clipmenu daemon
 exec --no-startup-id mpris-proxy # for bluetooth headphone media control
+exec --no-startup-id nm-applet # network manager applet
 exec --no-startup-id blueman-applet # bluetooth manager applet
+exec --no-startup-id pasystray # pulseaudio applet
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent # start geoclue for redshift
 exec --no-startup-id redshift-gtk # redshift w/ applet
 exec nextcloud # nextcloud
@@ -228,42 +230,34 @@ hide_edge_borders smart
 #
 # You can use these variables anywhere in the i3 configuration file.
 
-set $base00 #181818
-set $base01 #282828
-set $base02 #383838
-set $base03 #585858
-set $base04 #b8b8b8
-set $base05 #d8d8d8
-set $base06 #e8e8e8
-set $base07 #f8f8f8
-set $base08 #ab4642
-set $base09 #dc9656
-set $base0A #f7ca88
-set $base0B #a1b56c
-set $base0C #86c1b9
-set $base0D #7cafc2
-set $base0E #ba8baf
-set $base0F #a16946
+set $base00 #241c45
+set $base01 #2a2151
+set $base03 #4E3D96
+set $base05 #1DC7D0
+set $base07 #9CEEE7
+set $base08 #CA29FF
+set $base0D #35C09C
+set $base0C #53DEB9
 
 # Basic bar configuration using the Base16 variables.
-bar {
-  status_command i3status-rs
-  position top
-  tray_padding 0
+# bar {
+#   status_command i3status-rs
+#   position top
+#   tray_padding 0
 
-  colors {
-    background $base00
-    separator  $base01
-    statusline $base04
+#   colors {
+#     background $base00
+#     separator  $base01
+#     statusline $base04
 
-    # State             Border  BG      Text
-    focused_workspace   $base05 $base0D $base00
-    active_workspace    $base05 $base03 $base00
-    inactive_workspace  $base03 $base01 $base05
-    urgent_workspace    $base08 $base08 $base00
-    binding_mode        $base00 $base0A $base00
-  }
-}
+#     # State             Border  BG      Text
+#     focused_workspace   $base05 $base0D $base00
+#     active_workspace    $base05 $base03 $base00
+#     inactive_workspace  $base03 $base01 $base05
+#     urgent_workspace    $base08 $base08 $base00
+#     binding_mode        $base00 $base0A $base00
+#   }
+# }
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
