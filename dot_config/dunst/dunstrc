@@ -170,7 +170,7 @@
     # Paths to default icons.
     # icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
     # icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
-    icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
+    icon_path = /usr/share/icons/Papirus-Dark/64x64@2x/status/:/usr/share/icons/Papirus-Dark/64x64@2x/devices/:/usr/share/icons/Papirus-Dark/64x64@2x/apps/
 
     ### History ###
 
@@ -417,21 +417,23 @@
 #
 # vim: ft=cfg
 
-# Base 16 Default Dark
-frame_color = "#d8d8d8"
-separator_color = "#d8d8d8"
-
 [base16_low]
-    msg_urgency = low
-    background = "#282828"
-    foreground = "#585858"
+  msg_urgency = low
+  background = "#241c45"
+  foreground = "#9CEEE7"
+  frame_color = "#9CEEE7"
+  separator_color = "#9CEEE7"
 
 [base16_normal]
-    msg_urgency = normal
-    background = "#383838"
-    foreground = "#d8d8d8"
+  msg_urgency = normal
+  background = "#4E3D96"
+  foreground = "#1DC7D0"
+  frame_color = "#1DC7D0"
+  separator_color = "#1DC7D0"
 
 [base16_critical]
-    msg_urgency = critical
-    background = "#ab4642"
-    foreground = "#e8e8e8"
+  msg_urgency = critical
+  background = "#CA29FF"
+  foreground = "#9CEEE7"
+  frame_color = "#9CEEE7"
+  separator_color = "#9CEEE7"
