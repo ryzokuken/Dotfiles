@@ -1,0 +1,4 @@
+{{- $exaApiKey := promptStringOnce . "exa_api_key" "Exa API key" -}}
+
+[data]
+    exa_api_key = {{ $exaApiKey | quote }}

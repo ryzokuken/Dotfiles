@@ -1,1 +1,6 @@
 README.md
+
+# Bash-only scripts — not usable on native Windows
+{{ if eq .chezmoi.os "windows" }}
+dot_claude/executable_statusline.sh
+{{ end }}
