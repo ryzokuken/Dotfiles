@@ -1,14 +1,10 @@
 [user]
-	email = ryzokuken@disroot.org
+	email = ryzokuken@igalia.com
 	name = Ujjwal Sharma
-	signingkey = E6D26A49483F1558B244D02E292CF55793C8EE24
-[commit]
-	gpgsign = true
 [core]
-	excludesFile = /home/ryzokuken/.gitignore
-[pull]
-	ff = only
-[http]
-	cookiefile = /home/ryzokuken/.gitcookies
-[init]
-	defaultBranch = main
+	editor = nvim
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
