@@ -94,6 +94,23 @@ export VISUAL='nvim'
 alias vi='nvim'
 alias vim='nvim'
 
+# -- Replacement Aliases --
+alias ls='eza --icons --group-directories-first'
+alias ll='eza -l --icons --git --group-directories-first'
+alias lt='eza --tree --level=2 --icons'
+alias cat='bat --paging=never'
+alias grep='rg'
+alias find='fd'
+alias top='btm'
+alias du='dust'
+alias help='tldr'
+
+# -- Zoxide Initialization (Mandatory for 'z' to work) --
+eval "$(zoxide init zsh)"
+
+# -- Git-aware cat (optional) --
+alias catg='bat --style=changes'
+
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
@@ -118,8 +135,6 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 eval "$(starship init zsh)"
 
-#  "/home/ryzo/.deno/env"
-[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
 export PATH="$HOME/.local/bin:$PATH"
 
 # Added by LM Studio CLI tool (lms)
