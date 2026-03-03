@@ -59,6 +59,15 @@ if [ -z "$current_dir" ] && [ -z "$model_name" ]; then
     : "${duration_ms:=0}"
 fi
 
+# EUR conversion (rate cached by fetch-eur-rate.service, falls back to 0.93)
+_eur_cache="$HOME/.cache/claude-eur-rate"
+if [[ -f "$_eur_cache" ]] && [[ $(< "$_eur_cache") =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+    eur_rate=$(< "$_eur_cache")
+else
+    eur_rate="0.93"
+fi
+cost=$(awk "BEGIN {printf \"%.2f\", $cost * $eur_rate}")
+
 # Git info
 if cd "$current_dir" 2>/dev/null; then
     git_branch=$(git -c core.useBuiltinFSMonitor=false branch --show-current 2>/dev/null)
@@ -151,9 +160,9 @@ if [ -n "$ctx_pct" ]; then
     fi
 fi
 if [ -n "$line2" ]; then
-    line2="$line2 $(printf '%b \033[33m$%s\033[0m' "$SEP" "$cost")"
+    line2="$line2 $(printf '%b \033[33m€%s\033[0m' "$SEP" "$cost")"
 else
-    line2=$(printf '\033[33m$%s\033[0m' "$cost")
+    line2=$(printf '\033[33m€%s\033[0m' "$cost")
 fi
 if [ -n "$session_time" ]; then
     line2="$line2 $(printf '%b \033[36m⏱ %s\033[0m' "$SEP" "$session_time")"

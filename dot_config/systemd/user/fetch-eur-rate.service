@@ -1,0 +1,8 @@
+[Unit]
+Description=Fetch USD→EUR exchange rate for Claude Code statusline
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.claude/fetch-eur-rate.sh

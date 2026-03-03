@@ -1,0 +1,10 @@
+[Unit]
+Description=Refresh USD→EUR exchange rate every 6 hours
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=6h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
