@@ -74,6 +74,12 @@ When adding dependencies, CI actions, or tool versions, always look up the curre
 |------|----------|-------|
 | `rg` (ripgrep) | grep | `rg "pattern"` - 10x faster regex search |
 | `fd` | find | `fd "*.py"` - fast file finder |
+| `bat` | cat | `bat file` - syntax-highlighted output; use `--paging=never` in scripts |
+| `eza` | ls | `eza --icons --git -l` - modern ls with git integration |
+| `z` (zoxide) | cd | `z dirname` - frecency-aware directory jumping; requires `eval "$(zoxide init zsh)"` |
+| `btm` (bottom) | top/htop | `btm` - TUI process/resource monitor |
+| `dust` | du | `dust` - visual disk usage |
+| `tldr` (tealdeer) | man | `tldr command` - concise usage examples |
 | `ast-grep` | - | `ast-grep --pattern ‘$FUNC($$$)’ --lang py` - AST-based code search |
 | `shellcheck` | - | `shellcheck script.sh` - shell script linter |
 | `shfmt` | - | `shfmt -i 2 -w script.sh` - shell formatter |
@@ -81,9 +87,16 @@ When adding dependencies, CI actions, or tool versions, always look up the curre
 | `zizmor` | - | `zizmor .github/workflows/` - Actions security audit |
 | `prek` | pre-commit | `prek run` - fast git hooks (Rust, no Python) |
 | `wt` | git worktree | `wt switch branch` - manage parallel worktrees |
-| `trash` | rm | `trash file` - moves to macOS Trash (recoverable). **Never use `rm -rf`** |
+| `trash` | rm | `trash file` - recoverable delete (Linux: `~/.local/share/Trash`). **Never use `rm -rf`** |
 
 Prefer `ast-grep` over ripgrep when searching for code structure (function calls, class definitions, imports, pattern matching across arguments). Use ripgrep for literal strings and log messages.
+
+**Shell alias warning:** On this system, `grep`, `find`, `ls`, `cat`, `top`, `du`, and `help` are
+aliased to their modern replacements in `~/.zshrc`. These aliases are **interactive-shell-only** —
+Bash tool calls (non-interactive) see the real binaries. Always use native tool names (`rg`, `fd`,
+`bat`, `eza`) in scripts and commands: they’re installed system-wide, work in both interactive and
+non-interactive contexts, and have the expected syntax. Never write Bash commands using `grep` or
+`find` with traditional flags — they will break when run interactively on this machine.
 
 ### Python
 

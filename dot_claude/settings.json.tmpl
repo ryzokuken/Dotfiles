@@ -8,8 +8,6 @@
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
-  "enableAllProjectMcpServers": false,
-  "alwaysThinkingEnabled": true,
   "permissions": {
     "deny": [
       "Bash(rm -rf *)",
@@ -22,11 +20,9 @@
       "Bash(git push --force*)",
       "Bash(git push *--force*)",
       "Bash(git reset --hard*)",
-
       "Edit(~/.bashrc)",
       "Edit(~/.zshrc)",
       "Edit(~/.ssh/**)",
-
       "Read(~/.ssh/**)",
       "Read(~/.gnupg/**)",
       "Read(~/.aws/**)",
@@ -117,6 +113,20 @@
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
-  }
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "skill-extractor@skills-curated": true,
+    "skill-improver@trailofbits": true
+  },
+  "alwaysThinkingEnabled": true
 }
 {{- end }}
