@@ -2,8 +2,8 @@
 
 Global instructions for all projects. Project-specific CLAUDE.md files override these defaults.
 
-- Prefer Exa AI (`mcp__exa__web_search_exa`) over `WebSearch` for all web searches
 - Use skills proactively when they match the task — suggest relevant ones, don’t block on them
+- **YubiKey SSH auth**: Before any `git push`, ask the user to plug in their YubiKey. SSH auth requires this physical security key to be present.
 
 ## Philosophy
 
@@ -87,7 +87,7 @@ When adding dependencies, CI actions, or tool versions, always look up the curre
 | `zizmor` | - | `zizmor .github/workflows/` - Actions security audit |
 | `prek` | pre-commit | `prek run` - fast git hooks (Rust, no Python) |
 | `wt` | git worktree | `wt switch branch` - manage parallel worktrees |
-| `trash` | rm | `trash file` - recoverable delete (Linux: `~/.local/share/Trash`). **Never use `rm -rf`** |
+| `trash` | rm | `gio trash file` - recoverable delete on GNOME/Linux (uses `gio trash`, NOT the `trash` CLI). **Never use `rm -rf`** |
 
 Prefer `ast-grep` over ripgrep when searching for code structure (function calls, class definitions, imports, pattern matching across arguments). Use ripgrep for literal strings and log messages.
 
@@ -115,14 +115,19 @@ Tests in `tests/` directory mirroring package structure. Supply chain: `pip-audi
 
 ### Node/TypeScript
 
-**Runtime:** Node 22 LTS, ESM only (`"type": "module"`)
+**Runtime:** Latest Active LTS Node (24 'Krypton' now), ESM only (`"type": "module"`). Manage versions with `mise` or the system package manager — not nvm. Deno is the preferred runtime for scripts/tools and greenfield projects that don't need the npm ecosystem — its built-in TS, permissions sandbox, and toolchain remove moving parts. Pick the safe runtime (Node LTS or Deno); reach for the faster tooling on top.
 
 | purpose | tool |
 |---------|------|
+| version manager | `mise` (or system Node) |
+| package manager | `pnpm` |
+| bundler / dev server | `vite` |
 | lint | `oxlint` |
 | format | `oxfmt` |
 | test | `vitest` |
 | types | `tsc --noEmit` |
+
+**Prefer pnpm** over npm/yarn (faster, strict, content-addressed store) and **vite** for app bundling/dev server over webpack/CRA. On Deno, use its native `deno task`/`deno test`/`deno fmt`/`deno lint` instead of the npm-side equivalents.
 
 **Always use oxlint and oxfmt** over eslint/prettier — they’re faster and stricter. Enable `typescript`, `import`, `unicorn` plugins.
 
