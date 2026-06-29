@@ -31,7 +31,7 @@ Prefixes stack: `private_dot_gnupg/` → `~/.gnupg/` with restricted perms.
 Files with `.tmpl` suffix are Go text/template processed by chezmoi. Missing `{{- end }}` tags will
 silently produce broken output — always verify template structure.
 
-**OS-conditional pattern** (used in `settings.json.tmpl` and `dot_mcp.json.tmpl`):
+**OS-conditional pattern** (used in `settings.json.tmpl`):
 ```
 {{- if eq .chezmoi.os "windows" -}}
   ... windows config ...
@@ -39,9 +39,6 @@ silently produce broken output — always verify template structure.
   ... linux config ...
 {{- end }}
 ```
-
-**Data variables** (set via `.chezmoi.toml.tmpl`, prompted on `chezmoi init`):
-- `.exa_api_key` — Exa AI API key, injected into `dot_mcp.json.tmpl`
 
 ## Shell Environment
 
@@ -95,6 +92,5 @@ dot_config/          → ~/.config/    (alacritty, i3, nvim, kitty, starship, sy
 private_dot_gnupg/   → ~/.gnupg/     (0600)
 dot_zshrc            → ~/.zshrc
 dot_gitconfig        → ~/.gitconfig
-dot_mcp.json.tmpl    → ~/.mcp.json   (MCP server config with Exa key)
 dot_tmux.conf        → ~/.tmux.conf
 ```
