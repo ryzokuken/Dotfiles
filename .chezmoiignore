@@ -1,4 +1,5 @@
 README.md
+CLAUDE.md
 
 # Linux-only files — not usable on native Windows
 {{ if eq .chezmoi.os "windows" }}

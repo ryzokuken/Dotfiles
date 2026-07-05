@@ -70,18 +70,19 @@ Installed via `yay -S eza bat ripgrep fd zoxide bottom dust tealdeer`.
 Deployed to `~/.claude/`. Contains:
 
 - `CLAUDE.md` — global instructions (symlinked from repo)
-- `settings.json.tmpl` — OS-conditional Claude Code settings; Windows branch omits Linux-only keys
-  (`hooks`, `statusLine`, `enabledPlugins`)
 - `executable_statusline.sh` — shell script for Claude Code status bar (shows cost + EUR)
 - `executable_fetch-eur-rate.sh` — fetches EUR/USD rate for statusline
 - `commands/` — custom slash commands
 
-`settings.local.json` (in `.claude/`, not in chezmoi) holds machine-local overrides:
-`enableAllProjectMcpServers` and `enabledMcpjsonServers`.
+`settings.json` is intentionally **not** tracked here — it churns too often (plugin toggles, model
+overrides) to be worth reconciling against a template. It's machine-local, managed by hand.
+`settings.local.json` similarly holds machine-local overrides: `enableAllProjectMcpServers` and
+`enabledMcpjsonServers`.
 
 ## .chezmoiignore
 
-`README.md` is excluded from deployment. Linux-only paths (statusline scripts, systemd units) are
+`README.md` and `CLAUDE.md` (this file) are excluded from deployment — they document the repo
+itself and aren't meant to land in `$HOME`. Linux-only paths (statusline scripts, systemd units) are
 excluded on Windows.
 
 ## Repo Structure
