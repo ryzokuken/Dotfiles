@@ -113,9 +113,8 @@ Address all P1–P3 findings. For each finding, either:
   case). Document the reasoning inline.
 
 When a fix requires external context — unfamiliar library behavior,
-unclear API semantics, or an error you don't recognize — use Exa
-(`mcp__exa__web_search_exa`) to search for solutions rather than
-guessing.
+unclear API semantics, or an error you don't recognize — use
+WebSearch to search for solutions rather than guessing.
 
 P4 findings are informational — note them but do not fix unless
 trivial.

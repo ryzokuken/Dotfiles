@@ -431,8 +431,7 @@ Run `git diff main -- .github/` to see what changed. Identify:
 - Old and new versions (or SHA pins)
 - Whether this is a patch, minor, or major version bump
 
-For major version bumps, use Exa (`mcp__exa__web_search_exa`) to
-search for breaking changes:
+For major version bumps, use WebSearch to search for breaking changes:
 `{action_name} v{old_major} to v{new_major} migration breaking changes`
 
 **STEP 3 — Workflow validation**

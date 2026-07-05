@@ -27,8 +27,8 @@ confirmation at any step.
 
 Before planning, determine if the issue requires external context
 you don't already have — unfamiliar APIs, protocols, libraries,
-error messages, or domain-specific concepts. If so, use Exa
-(`mcp__exa__web_search_exa`) to search for:
+error messages, or domain-specific concepts. If so, use WebSearch
+to search for:
 
 - Official documentation for referenced libraries or APIs
 - Known solutions for the error messages or symptoms described
@@ -70,7 +70,7 @@ Add tests for the changed behavior as part of implementation —
 tests are code, not a quality gate.
 
 When stuck during implementation — a confusing error, an
-unfamiliar API, or an approach that isn't working — use Exa
+unfamiliar API, or an approach that isn't working — use WebSearch
 to search for solutions rather than spinning.
 
 ## 5. Build, test, lint
