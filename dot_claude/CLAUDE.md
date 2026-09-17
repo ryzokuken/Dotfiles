@@ -3,7 +3,6 @@
 Global instructions for all projects. Project-specific CLAUDE.md files override these defaults.
 
 - Use skills proactively when they match the task — suggest relevant ones, don’t block on them
-- **YubiKey SSH auth**: Before any `git push`, ask the user to plug in their YubiKey. SSH auth requires this physical security key to be present.
 
 ## Philosophy
 
