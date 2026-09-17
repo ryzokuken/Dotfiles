@@ -131,3 +131,11 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Added by LM Studio CLI tool (lms)
 export PATH="$PATH:/home/ryzo/.lmstudio/bin"
+
+# pnpm
+export PNPM_HOME='/home/ryzo/.local/share/pnpm'
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
