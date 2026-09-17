@@ -70,7 +70,8 @@ Installed via `yay -S eza bat ripgrep fd zoxide bottom dust tealdeer`.
 Deployed to `~/.claude/`. Contains:
 
 - `CLAUDE.md` — global instructions (symlinked from repo)
-- `executable_statusline.sh` — shell script for Claude Code status bar (shows cost + EUR)
+- `executable_statusline.sh` — Claude Code status bar: context bar, 5h/7d rate-limit bars with
+  reset countdowns, and session cost in EUR
 - `executable_fetch-eur-rate.sh` — fetches EUR/USD rate for statusline
 - `commands/` — custom slash commands
 

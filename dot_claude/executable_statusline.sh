@@ -1,174 +1,317 @@
-#!/bin/bash
-# Two-line statusline with visual context progress bar
-#
-# Line 1: Model, folder, branch
-# Line 2: Progress bar, context %, cost, duration
-#
-# Context % uses Claude Code's pre-calculated remaining_percentage,
-# which accounts for compaction reserves. 100% = compaction fires.
+#!/usr/bin/env bash
+set -u
+INPUT="$(cat)"
+export INPUT_JSON="$INPUT"
 
-# Read stdin (Claude Code passes JSON data via stdin)
-stdin_data=$(cat)
+# Terminal width for flex-spacer math. Honors STATUSLINE_COLS env override
+# (used by parity tests); otherwise tries tput, finally falls back to 80.
+STATUSLINE_COLS=${STATUSLINE_COLS:-$(tput cols 2>/dev/null || echo 80)}
 
-# Single jq call - extract all values at once
-# Prefer pre-calculated remaining_percentage (100 - remaining = used toward compact)
-# Fall back to manual calc from raw tokens if not available
-IFS=$'\t' read -r current_dir model_name cost lines_added lines_removed duration_ms ctx_used cache_pct < <(
-    echo "$stdin_data" | jq -r '[
-        .workspace.current_dir // "unknown",
-        .model.display_name // "Unknown",
-        (try (.cost.total_cost_usd // 0 | . * 100 | floor / 100) catch 0),
-        (.cost.total_lines_added // 0),
-        (.cost.total_lines_removed // 0),
-        (.cost.total_duration_ms // 0),
-        (try (
-            if (.context_window.remaining_percentage // null) != null then
-                100 - (.context_window.remaining_percentage | floor)
-            elif (.context_window.context_window_size // 0) > 0 then
-                (((.context_window.current_usage.input_tokens // 0) +
-                  (.context_window.current_usage.cache_creation_input_tokens // 0) +
-                  (.context_window.current_usage.cache_read_input_tokens // 0)) * 100 /
-                 .context_window.context_window_size) | floor
-            else "null" end
-        ) catch "null"),
-        (try (
-            (.context_window.current_usage // {}) |
-            if (.input_tokens // 0) + (.cache_read_input_tokens // 0) > 0 then
-                ((.cache_read_input_tokens // 0) * 100 /
-                 ((.input_tokens // 0) + (.cache_read_input_tokens // 0))) | floor
-            else 0 end
-        ) catch 0)
-    ] | @tsv'
-)
+# Visible-character length: strip CSI SGR sequences then count chars.
+# Wide glyphs (emoji, CJK) count as 1 column — same simplification as the
+# interpret backend uses.
+__visible_len() {
+  printf '%s' "$1" | sed 's/\x1b\[[0-9;]*m//g' | awk '{ printf "%s", length($0) }'
+}
 
-# Bash-level fallback: if jq crashed entirely, extract fields individually
-if [ -z "$current_dir" ] && [ -z "$model_name" ]; then
-    current_dir=$(echo "$stdin_data" | jq -r '.workspace.current_dir // .cwd // "unknown"' 2>/dev/null)
-    model_name=$(echo "$stdin_data" | jq -r '.model.display_name // "Unknown"' 2>/dev/null)
-    cost=$(echo "$stdin_data" | jq -r '(.cost.total_cost_usd // 0)' 2>/dev/null)
-    lines_added=$(echo "$stdin_data" | jq -r '(.cost.total_lines_added // 0)' 2>/dev/null)
-    lines_removed=$(echo "$stdin_data" | jq -r '(.cost.total_lines_removed // 0)' 2>/dev/null)
-    duration_ms=$(echo "$stdin_data" | jq -r '(.cost.total_duration_ms // 0)' 2>/dev/null)
-    ctx_used=""
-    cache_pct="0"
-    : "${current_dir:=unknown}"
-    : "${model_name:=Unknown}"
-    : "${cost:=0}"
-    : "${lines_added:=0}"
-    : "${lines_removed:=0}"
-    : "${duration_ms:=0}"
-fi
+__repeat_char() {
+  local ch="$1" n="$2" out=""
+  if [ "$n" -le 0 ]; then printf ''; return; fi
+  local i=0
+  while [ "$i" -lt "$n" ]; do out+="$ch"; i=$((i+1)); done
+  printf '%s' "$out"
+}
 
-# EUR conversion (rate cached by fetch-eur-rate.service, falls back to 0.93)
-_eur_cache="$HOME/.cache/claude-eur-rate"
-if [[ -f "$_eur_cache" ]] && [[ $(< "$_eur_cache") =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
-    eur_rate=$(< "$_eur_cache")
+__sgr() { printf '\033[%sm' "$1"; }
+__reset() { printf '\033[0m'; }
+
+if command -v jq >/dev/null 2>&1; then
+  __field() {
+    printf '%s' "$INPUT_JSON" | jq -r --arg p "$1" '
+      ($p | split(".")) as $parts
+      | reduce $parts[] as $k (.; if type == "object" and has($k) then .[$k] else null end)
+      | if . == null then "" else (if type == "string" then . else tostring end) end
+    ' 2>/dev/null
+  }
 else
-    eur_rate="0.93"
-fi
-cost=$(awk "BEGIN {printf \"%.2f\", $cost * $eur_rate}")
-
-# Git info
-if cd "$current_dir" 2>/dev/null; then
-    git_branch=$(git -c core.useBuiltinFSMonitor=false branch --show-current 2>/dev/null)
-    git_root=$(git -c core.useBuiltinFSMonitor=false rev-parse --show-toplevel 2>/dev/null)
-fi
-
-# Build repo path display (folder name only for brevity)
-if [ -n "$git_root" ]; then
-    repo_name=$(basename "$git_root")
-    if [ "$current_dir" = "$git_root" ]; then
-        folder_name="$repo_name"
-    else
-        folder_name=$(basename "$current_dir")
-    fi
-else
-    folder_name=$(basename "$current_dir")
-fi
-
-# Generate visual progress bar for context usage
-progress_bar=""
-bar_width=12
-
-if [ -n "$ctx_used" ] && [ "$ctx_used" != "null" ]; then
-    filled=$((ctx_used * bar_width / 100))
-    empty=$((bar_width - filled))
-
-    if [ "$ctx_used" -lt 50 ]; then
-        bar_color='\033[32m'  # Green (0-49%)
-    elif [ "$ctx_used" -lt 80 ]; then
-        bar_color='\033[33m'  # Yellow (50-79%)
-    else
-        bar_color='\033[31m'  # Red (80-100%)
-    fi
-
-    progress_bar="${bar_color}"
-    for ((i=0; i<filled; i++)); do
-        progress_bar="${progress_bar}█"
-    done
-    progress_bar="${progress_bar}\033[2m"
-    for ((i=0; i<empty; i++)); do
-        progress_bar="${progress_bar}⣿"
-    done
-    progress_bar="${progress_bar}\033[0m"
-
-    ctx_pct="${ctx_used}%"
-else
-    ctx_pct=""
+  if command -v python3 >/dev/null 2>&1 && python3 -c 'import sys' >/dev/null 2>&1; then
+    __PY=python3
+  elif command -v python >/dev/null 2>&1; then
+    __PY=python
+  else
+    __PY=""
+  fi
+  __field() {
+    if [ -z "$__PY" ]; then printf ''; return; fi
+    PATH_ARG="$1" "$__PY" - <<'PYEOF' 2>/dev/null
+import json, os
+d = json.loads(os.environ.get('INPUT_JSON','{}') or '{}')
+p = os.environ.get('PATH_ARG','')
+cur = d
+for part in p.split('.'):
+    if isinstance(cur, dict) and part in cur:
+        cur = cur[part]
+    else:
+        cur = None
+        break
+if cur is None:
+    print('', end='')
+elif isinstance(cur, bool):
+    print('true' if cur else 'false', end='')
+else:
+    print(cur, end='')
+PYEOF
+  }
 fi
 
-# Session time (human-readable)
-if [ "$duration_ms" -gt 0 ] 2>/dev/null; then
-    total_sec=$((duration_ms / 1000))
-    hours=$((total_sec / 3600))
-    minutes=$(((total_sec % 3600) / 60))
-    seconds=$((total_sec % 60))
-    if [ "$hours" -gt 0 ]; then
-        session_time="${hours}h ${minutes}m"
-    elif [ "$minutes" -gt 0 ]; then
-        session_time="${minutes}m ${seconds}s"
-    else
-        session_time="${seconds}s"
-    fi
-else
-    session_time=""
+__basename() { local s="$1"; printf '%s' "${s##*/}"; }
+__compact() {
+  local s="$1"
+  if [ -z "$s" ]; then printf ''; return; fi
+  # Use awk so we don't depend on bash arrays. Split on '/', take the first
+  # char of every segment except the last; preserve a leading slash by
+  # emitting an empty initial element when the path starts with '/'.
+  printf '%s' "$s" | awk 'BEGIN{FS="/"} {
+    out=""
+    for (i=1; i<=NF; i++) {
+      if (i==NF) { piece = $i }
+      else if ($i == "") { piece = "" }
+      else { piece = substr($i, 1, 1) }
+      if (i==1) { out = piece } else { out = out "/" piece }
+    }
+    printf "%s", out
+  }'
+}
+__tildify() {
+  local s="$1"
+  local home="${HOME%/}"
+  if [ -n "$home" ] && [[ "$s" == "$home"* ]]; then
+    printf '~%s' "${s#$home}"
+    return
+  fi
+  if [[ "$s" =~ ^/(Users|home)/[^/]+(.*)$ ]]; then
+    printf '~%s' "${BASH_REMATCH[2]}"
+    return
+  fi
+  printf '%s' "$s"
+}
+__truncate() {
+  local s="$1" n="$2"
+  if [ "$n" -le 0 ] || [ "${#s}" -le "$n" ]; then printf '%s' "$s"; return; fi
+  if [ "$n" -le 1 ]; then printf '%s' "${s:0:$n}"; return; fi
+  printf '%s…' "${s:0:$((n-1))}"
+}
+__cost_fmt() { printf '$%.*f' "$2" "$1"; }
+__dur_hms() {
+  local ms="$1" total h m s
+  total=$((ms/1000)); h=$((total/3600)); m=$(((total%3600)/60)); s=$((total%60))
+  if [ "$h" -gt 0 ]; then printf '%d:%02d:%02d' "$h" "$m" "$s"
+  else printf '%d:%02d' "$m" "$s"; fi
+}
+__dur_human() {
+  local ms="$1" total m s h mm
+  total=$((ms/1000))
+  if [ "$total" -lt 60 ]; then printf '%ds' "$total"; return; fi
+  m=$((total/60)); s=$((total%60))
+  if [ "$m" -lt 60 ]; then
+    if [ "$s" -gt 0 ]; then printf '%dm %ds' "$m" "$s"; else printf '%dm' "$m"; fi
+    return
+  fi
+  h=$((m/60)); mm=$((m%60))
+  if [ "$mm" -gt 0 ]; then printf '%dh %dm' "$h" "$mm"; else printf '%dh' "$h"; fi
+}
+__bar() {
+  local pct="$1" width="$2" filled="$3" empty="$4"
+  local p i n=0 e=0
+  p=${pct%.*}
+  [ -z "$p" ] && p=0
+  if [ "$p" -lt 0 ]; then p=0; fi
+  if [ "$p" -gt 100 ]; then p=100; fi
+  n=$(( (p * width + 50) / 100 ))
+  e=$((width - n))
+  local out=""
+  for ((i=0; i<n; i++)); do out+="$filled"; done
+  for ((i=0; i<e; i++)); do out+="$empty"; done
+  printf '%s' "$out"
+}
+__git_branch() {
+  local cwd
+  cwd="$(__field workspace.current_dir)"
+  if [ -z "$cwd" ]; then cwd="$(__field cwd)"; fi
+  if [ -n "$cwd" ] && command -v git >/dev/null 2>&1; then
+    git -C "$cwd" rev-parse --abbrev-ref HEAD 2>/dev/null
+  else
+    __field workspace.git_worktree
+  fi
+}
+__git_dirty() {
+  local cwd
+  cwd="$(__field workspace.current_dir)"
+  if [ -z "$cwd" ]; then cwd="$(__field cwd)"; fi
+  if [ -n "$cwd" ] && command -v git >/dev/null 2>&1; then
+    if [ -n "$(git -C "$cwd" status --porcelain 2>/dev/null)" ]; then printf '1'; else printf '0'; fi
+  else
+    printf '0'
+  fi
+}
+__emit() {
+  local style="$1" text="$2"
+  if [ -n "$style" ]; then __sgr "$style"; fi
+  printf '%s' "$text"
+  if [ -n "$style" ]; then __reset; fi
+}
+__norm_int() {
+  # Coerce a possibly-decimal/empty/garbage field value to a non-negative
+  # integer string. Used by token-display helpers.
+  local v="$1"
+  v="${v%%.*}"
+  case "$v" in
+    ''|*[!0-9]*) printf '0' ;;
+    *) printf '%s' "$v" ;;
+  esac
+}
+__fmt_token_compact() {
+  local n
+  n="$(__norm_int "$1")"
+  if [ "$n" -lt 1000 ]; then printf '%s' "$n"; return; fi
+  if [ "$n" -lt 1000000 ]; then
+    local whole=$((n / 1000))
+    local rem=$((n - whole * 1000))
+    local dec=$((rem / 100))
+    if [ "$dec" -eq 0 ]; then printf '%dk' "$whole"; else printf '%d.%dk' "$whole" "$dec"; fi
+    return
+  fi
+  local whole=$((n / 1000000))
+  local rem=$((n - whole * 1000000))
+  local dec=$((rem / 100000))
+  if [ "$dec" -eq 0 ]; then printf '%dM' "$whole"; else printf '%d.%dM' "$whole" "$dec"; fi
+}
+__fmt_token_full() {
+  local n
+  n="$(__norm_int "$1")"
+  printf '%s' "$n" | awk '{
+    s=$0; out=""; n=length(s)
+    while (n > 3) { out=","substr(s,n-2,3) out; n -= 3 }
+    out=substr(s,1,n) out
+    printf "%s", out
+  }'
+}
+__tokens_used() { __field 'context_window.total_input_tokens'; }
+__tokens_total() { __field 'context_window.context_window_size'; }
+__tokens_remaining() {
+  local u t
+  u="$(__norm_int "$(__tokens_used)")"
+  t="$(__norm_int "$(__tokens_total)")"
+  local r=$((t - u))
+  if [ "$r" -lt 0 ]; then r=0; fi
+  printf '%d' "$r"
+}
+__tokens_pct_int() {
+  local p
+  p="$(__field 'context_window.used_percentage')"
+  __norm_int "$p"
+}
+__tick() {
+  if [ -n "${STATUSLINE_CLOCK_OVERRIDE:-}" ]; then
+    printf '%s' "$STATUSLINE_CLOCK_OVERRIDE"
+  else
+    date +%s
+  fi
+}
+__rel_time() {
+  local target="$1"
+  if [ -z "$target" ]; then printf ''; return; fi
+  case "$target" in
+    ''|*[!0-9.-]*) printf ''; return ;;
+  esac
+  local t_int="${target%.*}"
+  if [ -z "$t_int" ] || [ "$t_int" = "-" ]; then printf ''; return; fi
+  local now diff h m s rem
+  now=$(__tick)
+  diff=$((t_int - now))
+  if [ "$diff" -le 0 ]; then printf ''; return; fi
+  if [ "$diff" -lt 60 ]; then printf 'T-%ds' "$diff"; return; fi
+  if [ "$diff" -lt 3600 ]; then
+    m=$((diff/60)); s=$((diff%60))
+    printf 'T-%dm%02ds' "$m" "$s"; return
+  fi
+  h=$((diff/3600)); rem=$(((diff%3600)/60))
+  printf 'T-%dh%02dm' "$h" "$rem"
+}
+__cost_eur() {
+  # Cost in EUR. Rate is cached by fetch-eur-rate.service; 0.93 is a stale-safe
+  # fallback so the field never disappears when the fetch has not run yet.
+  local usd rate cache="$HOME/.cache/claude-eur-rate"
+  usd="$(__field 'cost.total_cost_usd')"
+  case "$usd" in
+    ''|*[!0-9.]*) printf ''; return ;;
+  esac
+  rate=0.93
+  if [ -r "$cache" ]; then
+    local cached
+    cached="$(cat "$cache" 2>/dev/null)"
+    case "$cached" in
+      ''|*[!0-9.]*) ;;
+      *) rate="$cached" ;;
+    esac
+  fi
+  awk -v u="$usd" -v r="$rate" 'BEGIN { printf "%.2f", u * r }'
+}
+__emit '38;2;198;160;246;49' '['
+__v="$(__field 'workspace.current_dir')"
+__v="$(__basename "$__v")"
+__emit '38;2;198;160;246;49' "$__v"
+__emit '38;2;198;160;246;49' ']'
+__emit '38;2;238;212;159;49' ':'
+__out="$(__git_branch)"
+__emit '38;2;238;212;159;49' "$__out"
+__emit '2;38;2;202;211;245' ' · '
+__v="$(__field 'model.display_name')"
+__emit '1;38;2;245;169;127;49' "$__v"
+__emit '2;38;2;202;211;245' ' / '
+if [ "$(__field 'thinking.enabled')" = 'true' ]; then
+  __v="$(__field 'effort.level')"
+  __emit '2;38;2;202;211;245' "$__v"
+fi
+__reset
+printf '\n'
+__reset
+__emit '38;2;138;173;244' 'ctx '
+__v="$(__field 'context_window.used_percentage')"
+__bar_out="$(__bar "$__v" 20 '━' '─')"
+__emit '38;2;138;173;244' "$__bar_out"
+__emit '38;2;138;173;244' ' '
+__v="$(__field 'context_window.used_percentage')"
+__emit '38;2;138;173;244' "$__v"
+__emit '38;2;138;173;244' '%'
+__emit '2;38;2;202;211;245' ' · '
+__emit '38;2;166;218;149' '5h '
+__v="$(__field 'rate_limits.five_hour.used_percentage')"
+__bar_out="$(__bar "$__v" 10 '━' '─')"
+__emit '38;2;166;218;149' "$__bar_out"
+__emit '38;2;166;218;149' ' '
+__v="$(__field 'rate_limits.five_hour.used_percentage')"
+__emit '38;2;166;218;149' "$__v"
+__emit '38;2;166;218;149' '%'
+__v="$(__rel_time "$(__field 'rate_limits.five_hour.resets_at')")"
+if [ -n "$__v" ]; then
+  __emit '38;2;166;218;149' ' '
+  __emit '2;38;2;166;218;149' "$__v"
+fi
+__emit '2;38;2;202;211;245' ' · '
+__emit '38;2;166;218;149' '7d '
+__v="$(__field 'rate_limits.seven_day.used_percentage')"
+__bar_out="$(__bar "$__v" 10 '━' '─')"
+__emit '38;2;166;218;149' "$__bar_out"
+__emit '38;2;166;218;149' ' '
+__v="$(__field 'rate_limits.seven_day.used_percentage')"
+__emit '38;2;166;218;149' "$__v"
+__emit '38;2;166;218;149' '%'
+__v="$(__cost_eur)"
+if [ -n "$__v" ]; then
+  __emit '2;38;2;202;211;245' ' · '
+  __emit '38;2;238;212;159' "€$__v"
 fi
 
-# Separator
-SEP='\033[2m│\033[0m'
+exit 0
 
-# Get short model name (e.g., "Opus" instead of "Claude 3.5 Opus")
-short_model=$(echo "$model_name" | sed -E 's/Claude [0-9.]+ //; s/^Claude //')
-
-# LINE 1: [Model] folder | branch
-line1=$(printf '\033[37m[%s]\033[0m' "$short_model")
-line1="$line1 $(printf '\033[94m📁 %s\033[0m' "$folder_name")"
-if [ -n "$git_branch" ]; then
-    line1="$line1 $(printf '%b \033[96m🌿 %s\033[0m' "$SEP" "$git_branch")"
-fi
-
-# LINE 2: Progress bar | Context % | cost | duration
-line2=""
-if [ -n "$progress_bar" ]; then
-    line2=$(printf '%b' "$progress_bar")
-fi
-if [ -n "$ctx_pct" ]; then
-    if [ -n "$line2" ]; then
-        line2="$line2 $(printf '\033[37m%s\033[0m' "$ctx_pct")"
-    else
-        line2=$(printf '\033[37m%s\033[0m' "$ctx_pct")
-    fi
-fi
-if [ -n "$line2" ]; then
-    line2="$line2 $(printf '%b \033[33m€%s\033[0m' "$SEP" "$cost")"
-else
-    line2=$(printf '\033[33m€%s\033[0m' "$cost")
-fi
-if [ -n "$session_time" ]; then
-    line2="$line2 $(printf '%b \033[36m⏱ %s\033[0m' "$SEP" "$session_time")"
-fi
-if [ "$cache_pct" -gt 0 ] 2>/dev/null; then
-    line2="$line2 $(printf ' \033[2m↻%s%%\033[0m' "$cache_pct")"
-fi
-
-printf '%b\n\n%b' "$line1" "$line2"
