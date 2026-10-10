@@ -12,6 +12,7 @@ docs/
 .claude/statusline.sh
 .claude/fetch-eur-rate.sh
 .claude/docs/linux.md
+.zshrc
 .config/systemd/
 .config/pnpm/
 {{ else }}
