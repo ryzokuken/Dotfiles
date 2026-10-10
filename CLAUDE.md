@@ -74,8 +74,10 @@ machine-local overrides: `enableAllProjectMcpServers` and `enabledMcpjsonServers
 
 ## .chezmoiignore
 
-`README.md` and `CLAUDE.md` (this file) are excluded from deployment — they document the repo
-itself and aren't meant to land in `$HOME`. Per-OS files are excluded too. Patterns match **target**
+Meta files (`README.md`, `CLAUDE.md` (this file), `AGENTS.md`, `GLOSSARY.md`, `docs/`,
+`.scratch/`) are excluded from deployment — they document the repo itself and aren't meant to land
+in `$HOME`. Only actual config deploys; add any new meta file or directory to this list. Per-OS
+files are excluded too. Patterns match **target**
 paths (`.claude/statusline.sh`), not source names (`dot_claude/executable_statusline.sh`); a
 source-style pattern matches nothing.
 
@@ -91,3 +93,19 @@ dot_zshrc            → ~/.zshrc
 dot_gitconfig        → ~/.gitconfig
 dot_tmux.conf        → ~/.tmux.conf
 ```
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as GitHub issues on ryzokuken/Dotfiles; skills use the `gh` CLI. See
+`docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`,
+`wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout: root `GLOSSARY.md` + `docs/adr/`. See `docs/agents/domain.md`.

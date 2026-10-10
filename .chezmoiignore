@@ -1,5 +1,11 @@
+# Repo meta files: documentation and agent scaffolding, never deployed
 README.md
 CLAUDE.md
+AGENTS.md
+GLOSSARY.md
+GLOSSARY-MAP.md
+docs/
+.scratch/
 
 {{ if eq .chezmoi.os "windows" }}
 # Linux-only files, not usable on native Windows
