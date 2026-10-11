@@ -4,27 +4,8 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/). Repo lives at `~/.local/
 
 ## Chezmoi Workflow
 
-```sh
-chezmoi apply          # deploy repo → home dir  (alias: c apply)
-chezmoi edit ~/.zshrc  # open managed file for editing
-chezmoi re-add ~/.zshrc # pull live changes back into repo
-chezmoi diff           # preview what apply would change
-chezmoi update         # git pull + apply
-```
-
 Editing files directly in the repo is fine. Always run `chezmoi apply` (or `c apply`) after changes
 to deploy them, then commit.
-
-## File Naming Conventions
-
-| Prefix | Effect on deployment |
-|--------|----------------------|
-| `dot_` | replaces with `.` (e.g. `dot_zshrc` → `~/.zshrc`) |
-| `private_` | 0600 permissions |
-| `executable_` | sets executable bit |
-| `*.tmpl` | processed as Go template before writing |
-
-Prefixes stack: `private_dot_gnupg/` → `~/.gnupg/` with restricted perms.
 
 ## Templates
 
@@ -80,19 +61,6 @@ in `$HOME`. Only actual config deploys; add any new meta file or directory to th
 files are excluded too. Patterns match **target**
 paths (`.claude/statusline.sh`), not source names (`dot_claude/executable_statusline.sh`); a
 source-style pattern matches nothing.
-
-## Repo Structure
-
-```
-dot_claude/          → ~/.claude/
-dot_agents/          → ~/.agents/
-dot_config/          → ~/.config/    (alacritty, i3, nvim, kitty, starship, systemd, pnpm, …)
-AppData/             → ~/AppData/    (Windows only)
-private_dot_gnupg/   → ~/.gnupg/     (0600)
-dot_zshrc            → ~/.zshrc
-dot_gitconfig        → ~/.gitconfig
-dot_tmux.conf        → ~/.tmux.conf
-```
 
 ## Agent skills
 
