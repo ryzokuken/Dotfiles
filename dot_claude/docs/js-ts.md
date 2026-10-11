@@ -16,7 +16,8 @@ when scaffolding, and let the config, not prose, hold the line afterwards.
 | Types | `tsc --noEmit` |
 | Desktop apps | Tauri (Rust core: also read `rust.md`) |
 
-One `validate` script (typecheck, lint, test) is the single gate; CI and prek both call it.
+One `validate` script (typecheck, lint, format check, test) is the single gate; CI and prek both
+call it.
 
 ## Node version: latest, pinned by pnpm
 
