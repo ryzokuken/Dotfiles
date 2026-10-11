@@ -17,7 +17,8 @@ files and has no memories to mine.
 4. **Wire the stack** from the global doc for it. For JS/TS: `packageManager`, `devEngines.runtime`,
    a `validate` script (typecheck, lint, format check, test), the oxlint limits and strict tsconfig, and a
    `prek.toml` with `no-commit-to-branch` plus `validate`. Add a CI workflow that calls the same
-   `validate` script.
+   `validate` script. A project that commits to `main` omits `no-commit-to-branch`; a project that
+   declares no CI omits the workflow, and prek is its only gate.
 5. **Skills.** Ask which skills the project needs. Vendor them at project scope with
    `pnpx skills@latest add <source> -a claude-code`, which writes `.agents/skills/` and
    `skills-lock.json`. Turn off a plugin copy of the same skill in `.claude/settings.json`.
