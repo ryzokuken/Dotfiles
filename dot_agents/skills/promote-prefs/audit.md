@@ -9,7 +9,8 @@ Make this project's instructions lean, consistent with global, and free of lines
    Read `~/.claude/CLAUDE.md` and the global docs the project's stack points to.
 2. **Classify every instruction line** into one finding type, or **keep**:
    - **Contradiction**: global vs project, or two project files disagreeing.
-   - **Duplicate**: the same meaning stated twice (including a project line that restates global).
+   - **Duplicate**: the same meaning stated twice. A project line that restates global counts only
+     in a solo project; other contributors do not load the global file, so their project keeps it.
    - **Cache**: a copy of what the environment states (scripts, versions, config values); keep it
      only when the lookup is expensive.
    - **No-op**: an instruction the agent follows by default.

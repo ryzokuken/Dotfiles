@@ -23,8 +23,8 @@ files and has no memories to mine.
    `no-commit-to-branch` plus its gate.
 5. **Skills.** A solo project uses the global plugins and skills as they are. With other
    contributors, ask which skills the project needs and vendor them at project scope with
-   `pnpx skills@latest add <source> -a claude-code`, which writes `.agents/skills/` and
-   `skills-lock.json`; turn off the matching global plugin by its exact key in
+   `pnpx skills@latest add <source> -a claude-code`, which writes the skills and
+   `skills-lock.json`; add the upstream licence file beside them and turn off the matching global plugin by its exact key in
    `.claude/settings.json`. For mattpocock's skills, run `setup-matt-pocock-skills` to choose the
    issue tracker, triage labels, and domain-doc layout.
 6. **Verify.** On a clean checkout, `pnpm install && pnpm validate` passes, `.git/hooks` holds

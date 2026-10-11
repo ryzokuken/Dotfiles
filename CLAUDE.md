@@ -1,11 +1,11 @@
-# Dotfiles (chezmoi) — CachyOS/Arch Linux
+# Dotfiles (chezmoi)
 
 Dotfiles managed by [chezmoi](https://www.chezmoi.io/). Repo lives at `~/.local/share/chezmoi`.
 
 ## Chezmoi Workflow
 
 Editing files directly in the repo is fine. Always run `chezmoi apply` (or `c apply`) after changes
-to deploy them, then commit.
+to deploy them, then commit. This repo is solo and commits to `master`.
 
 ## Templates
 

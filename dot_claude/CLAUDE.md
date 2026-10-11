@@ -66,7 +66,7 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
   `pnpx skills@latest add <source> -g -a claude-code`. Plugins are for bundles with hooks, MCP, or
   agents (author's marketplace, autoUpdate).
 - Each skill loads from one source: the global plugins in a solo project; vendored copies
-  (`.agents/skills/`, `skills-lock.json`) in a project with other contributors, with the matching
+  (pinned in `skills-lock.json`, upstream licence included) in a project with other contributors, with the matching
   global plugin turned off by its exact key in `.claude/settings.json`.
 - HTML, CSS, browser JS: `modern-web-guidance` first, even when another skill drives the work;
   `impeccable` for design, critique, polish. Verify UI with headless Playwright, not

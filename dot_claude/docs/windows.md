@@ -21,7 +21,7 @@ machine learns a durable one.
   here.
 
 ## Toolchain
-- Rust stable (MSVC), Visual Studio Build Tools with "Desktop development with C++", pnpm, Node.
-  No Deno.
+- Rust stable (MSVC), Visual Studio Build Tools with "Desktop development with C++", pnpm, Node,
+  Deno (settler).
 - A winget Build Tools install has landed without the C++ workload; check that `VC\Tools\MSVC`
   exists instead of trusting "installed".
