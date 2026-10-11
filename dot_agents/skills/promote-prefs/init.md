@@ -15,7 +15,7 @@ files and has no memories to mine.
    gotchas, and pointers to deeper docs. Write `CLAUDE.md` as one line, `@AGENTS.md`. Every line of
    AGENTS.md must pass the test: would the agent get this wrong without it?
 4. **Wire the stack** from the global doc for it. For JS/TS: `packageManager`, `devEngines.runtime`,
-   a `validate` script (typecheck, lint, test), the oxlint limits and strict tsconfig, and a
+   a `validate` script (typecheck, lint, format check, test), the oxlint limits and strict tsconfig, and a
    `prek.toml` with `no-commit-to-branch` plus `validate`. Add a CI workflow that calls the same
    `validate` script.
 5. **Skills.** Ask which skills the project needs. Vendor them at project scope with
