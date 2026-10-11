@@ -44,12 +44,14 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
   nondeterministic, or external boundaries; break the code to watch the test fail.
 
 ## Git
-- Work on a branch in its own worktree (`EnterWorktree`) before the first edit; parallel
-  subagents each get one. A project that commits to `main` says so.
-- Commits: imperative, <=72 chars, one logical change. PR bodies describe the diff as it stands,
-  in plain factual language.
-- With a `prek.toml` or `.pre-commit-config.yaml`, run `prek install` and `prek run` before
-  committing; new repos get a prek config mirroring CI.
+- Work on a branch (`<slug>-<issue>`, or `<slug>`) in its own worktree (`EnterWorktree`) before
+  the first edit; parallel subagents each get one. A solo project that commits to `main` says so
+  in one line.
+- Subjects: plain imperative, <=72 chars, no type prefix; a body when the reason is not obvious.
+  Commit each finished piece: PRs land by squash, so the PR title is the subject on `main`.
+- PR bodies describe the diff as it stands, in plain factual language, and carry `Fixes #N`.
+- Hooks: `pnpm install` wires a JS/TS repo's; a `prek.toml` or `.pre-commit-config.yaml` needs
+  `prek install`, then `prek run` before committing.
 
 ## Stacks and platform
 - JS/TS is the default language (plain JS for small scripts, TS for apps); Python only when it is
@@ -61,9 +63,11 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
 
 ## Skills
 - Write and install skills in the open Agent Skills format (`SKILL.md`) with
-  `pnpx skills@latest add <source> -g -a claude-code`; project scope vendors `.agents/skills/` and
-  `skills-lock.json`. Plugins are for bundles with hooks, MCP, or agents (author's marketplace,
-  autoUpdate). Each skill has one source, plugin or CLI.
+  `pnpx skills@latest add <source> -g -a claude-code`. Plugins are for bundles with hooks, MCP, or
+  agents (author's marketplace, autoUpdate).
+- Each skill loads from one source: the global plugins in a solo project; vendored copies
+  (`.agents/skills/`, `skills-lock.json`) in a project with other contributors, with the matching
+  global plugin turned off by its exact key in `.claude/settings.json`.
 - HTML, CSS, browser JS: `modern-web-guidance` first, even when another skill drives the work;
   `impeccable` for design, critique, polish. Verify UI with headless Playwright, not
   Claude-in-Chrome.
@@ -79,4 +83,5 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
 **Promote**: when saving a feedback memory or adding a rule to a project's instructions, check
 whether three or more projects share it; if so, propose the edit to the chezmoi source
 (`~/.local/share/chezmoi/dot_claude/`), then `chezmoi apply`. `/promote-prefs` sweeps, audits, and
-bootstraps projects. Projects keep AGENTS.md canonical, with CLAUDE.md containing `@AGENTS.md`.
+bootstraps projects. A project with other contributors keeps AGENTS.md canonical, with CLAUDE.md
+containing `@AGENTS.md`; a solo project keeps either file.

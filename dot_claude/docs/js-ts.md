@@ -10,14 +10,46 @@ when scaffolding, and let the config, not prose, hold the line afterwards.
 | Runtime | Node, latest release (pinned below) |
 | Package manager | pnpm only (`packageManager` field set; delete any `package-lock.json`) |
 | Bundler / dev server | vite |
-| Test | vitest, colocated `*.test.ts` |
+| Test | vitest, colocated `*.test.ts(x)`; a `test/` directory for code that is not a module (templates, static sites) |
 | Lint | oxlint |
-| Format | oxfmt |
+| Format | oxfmt (`oxfmt` writes, `oxfmt --check` gates) |
 | Types | `tsc --noEmit` |
+| Duplication | jscpd |
+| Dead code | knip |
+| Git hooks | simple-git-hooks, lint-staged |
 | Desktop apps | Tauri (Rust core: also read `rust.md`) |
 
-One `validate` script (typecheck, lint, format check, test) is the single gate; CI and prek both
-call it.
+A tool earns its place when `pnpm install` sets it up and its config sits in the repo. One that
+cannot be a clean devDependency (actionlint, zizmor) is installed per machine and named in the
+project's docs.
+
+## The gate
+
+One `validate` script is the single gate: typecheck, lint, format check, unit tests, jscpd, knip.
+It holds only checks that are fast, offline, and deterministic. A networked or slow check (link
+crawl, browser smoke test) is its own CI job.
+
+```json
+"scripts": {
+  "validate": "pnpm typecheck && pnpm lint && pnpm fmt:check && pnpm test && pnpm dupes && pnpm knip",
+  "prepare": "simple-git-hooks"
+},
+"simple-git-hooks": {
+  "pre-commit": "[ \"$(git branch --show-current)\" != main ] || { echo 'Commit on a branch; main takes PRs only.' >&2; exit 1; }; pnpm exec lint-staged",
+  "pre-push": "if grep -q ' refs/heads/main '; then echo 'Push a branch; main takes PRs only.' >&2; exit 1; fi; pnpm validate"
+}
+```
+
+- A commit checks the staged files through lint-staged (format, lint, `vitest related`); a push
+  and CI run `validate`.
+- The two `main` checks are the branch protection, since private repos have none on GitHub. A
+  project that commits to `main` leaves both out.
+- `pnpm install` wires the hooks through `prepare`; run `pnpm run prepare` when `.git/hooks`
+  holds only `.sample` files.
+- jscpd: `minTokens: 35` and a `threshold` set to the repo's measured duplication, rounded up, and
+  lowered as copies are removed. It is a ceiling against new copies; the third copy is still found
+  by reading.
+- A repo with a handful of scripts leaves jscpd and knip out.
 
 ## Node version: latest, pinned by pnpm
 
@@ -34,9 +66,11 @@ call it.
 
 ## Supply chain
 
-Global pnpm config (`minimumReleaseAge`, `ignoreScripts`, exact-version save prefix) is managed in
-the chezmoi repo and applies to every project. Before installing, run
-`pnpm audit --audit-level=moderate`.
+pnpm's defaults are the guard, so no repo restates them: a release must be a day old before it
+resolves, and a dependency's build script fails the install until `allowBuilds` in
+`pnpm-workspace.yaml` names it. Leave `ignoreScripts` unset; it also skips the project's own
+`prepare`, which installs the git hooks. Global config holds only the exact-version save prefix.
+Before installing, run `pnpm audit --audit-level=moderate`.
 
 ## Lint limits (oxlint)
 
@@ -61,6 +95,8 @@ Run with `oxlint --deny-warnings` so warnings fail the gate.
 "exactOptionalPropertyTypes": true,
 "noImplicitOverride": true,
 "noPropertyAccessFromIndexSignature": true,
+"noImplicitReturns": true,
+"noFallthroughCasesInSwitch": true,
 "verbatimModuleSyntax": true,
 "isolatedModules": true,
 "erasableSyntaxOnly": true,
@@ -69,7 +105,8 @@ Run with `oxlint --deny-warnings` so warnings fail the gate.
 
 ESM only (`"type": "module"`). Node runs `.ts` directly by stripping types, so scripts need no build
 step: `erasableSyntaxOnly` keeps the syntax strippable, and relative imports carry the `.ts`
-extension.
+extension. Unused code is oxlint's and knip's to report, so `noUnusedLocals` and
+`noUnusedParameters` stay off.
 
 ## Plain JS (small scripts, tools, static sites)
 
