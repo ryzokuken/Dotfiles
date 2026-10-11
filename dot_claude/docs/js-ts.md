@@ -35,9 +35,8 @@ call it.
 ## Supply chain
 
 Global pnpm config (`minimumReleaseAge`, `ignoreScripts`, exact-version save prefix) is managed in
-the chezmoi repo and applies to every project. Each repo also carries `minimumReleaseAge` and
-`ignoreScripts` in its own `pnpm-workspace.yaml`, so the guard travels with the repo. Before
-installing, run `pnpm audit --audit-level=moderate`.
+the chezmoi repo and applies to every project. Before installing, run
+`pnpm audit --audit-level=moderate`.
 
 ## Lint limits (oxlint)
 
