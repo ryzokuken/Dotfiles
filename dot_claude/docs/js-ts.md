@@ -63,10 +63,14 @@ Run with `oxlint --deny-warnings` so warnings fail the gate.
 "noImplicitOverride": true,
 "noPropertyAccessFromIndexSignature": true,
 "verbatimModuleSyntax": true,
-"isolatedModules": true
+"isolatedModules": true,
+"erasableSyntaxOnly": true,
+"allowImportingTsExtensions": true
 ```
 
-ESM only (`"type": "module"`).
+ESM only (`"type": "module"`). Node runs `.ts` directly by stripping types, so scripts need no build
+step: `erasableSyntaxOnly` keeps the syntax strippable, and relative imports carry the `.ts`
+extension.
 
 ## Plain JS (small scripts, tools, static sites)
 
