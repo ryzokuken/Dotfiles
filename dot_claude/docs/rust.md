@@ -46,3 +46,12 @@ Set `cognitive-complexity-threshold = 8` and `too-many-arguments-threshold = 5` 
 - Newtypes over primitives (`UserId(u64)`); enums for state machines, not boolean flags.
 - `thiserror` in libraries, `anyhow` in applications; `tracing` for logging.
 - Profile before micro-optimizing.
+
+## Tauri
+
+- Pin the `tauri` and plugin crates with `=` and move them together with the matching `@tauri-apps`
+  npm packages; commit `Cargo.lock`. A loose range once let `tauri-runtime` 2.12 in, which
+  `tauri` 2.11.6 cannot run against (logseq-tools ADR 0009).
+- Verify the page in the running window: on Windows, start the app with
+  `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9333` and drive it over the
+  DevTools protocol.
