@@ -7,8 +7,7 @@ CI, pnpm setting) lives in that tool's config; prose here keeps only what needs 
 - **Simple**: take the minimal, stable path with the fewest moving parts. Add features, flags,
   config, and abstractions when something needs them; extract at the third copy.
 - **Dependencies pay their way**: prefer maintained, free-software (copyleft-compatible), ideally
-  independently audited dependencies over hand-rolled code, so effort stays on the project's core
-  goal. Each must pay for its own weight; check replacements.fyi (e18e) for lighter options.
+  audited dependencies over hand-rolled code; check replacements.fyi (e18e) for lighter options.
 - **Replace**: delete the old implementation when a new one lands (no shims, dual formats, or
   migration paths) and flag dead code.
 - **Verify**: set up guardrails first (linter, types, tests, hooks), prefer structure-aware tools
@@ -38,8 +37,7 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
   context before anything irreversible. A stalled reviewer gets unstuck, not replaced by a skim
   reported as clean; call a skim a "light sanity check".
 - Plans: extremely concise, grammar optional, ending with unresolved questions.
-- Implementation runs in fresh contexts on lighter models; the heaviest model is for architecture
-  and judgment.
+- Implement in fresh contexts on lighter models; the heaviest model is for architecture, judgment.
 - Tests: behavior through public interfaces, edges and errors, mocks only at slow,
   nondeterministic, or external boundaries; break the code to watch the test fail.
 
@@ -50,8 +48,7 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
 - Subjects: plain imperative, <=72 chars, no type prefix; a body when the reason is not obvious.
   Commit each finished piece: PRs land by squash, so the PR title is the subject on `main`.
 - PR bodies describe the diff as it stands, in plain factual language, and carry `Fixes #N`.
-- Hooks: `pnpm install` wires a JS/TS repo's; a `prek.toml` or `.pre-commit-config.yaml` needs
-  `prek install`, then `prek run` before committing.
+- A `prek.toml` or `.pre-commit-config.yaml` needs `prek install`, and `prek run` before commits.
 
 ## Stacks and platform
 - JS/TS is the default language (plain JS for small scripts, TS for apps); Python only when it is
@@ -62,22 +59,18 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
   (flying-dutchman).
 
 ## Skills
-- Write and install skills in the open Agent Skills format (`SKILL.md`) with
-  `pnpx skills@latest add <source> -g -a claude-code`. Plugins are for bundles with hooks, MCP, or
-  agents (author's marketplace, autoUpdate).
-- Each skill loads from one source: the global plugins in a solo project; vendored copies (pinned
-  in `skills-lock.json`, upstream licence included) in a project with other contributors, with
-  the matching global plugin turned off by its exact key in `.claude/settings.json`.
+- Write skills in the open Agent Skills format (`SKILL.md`); install with `pnpx skills@latest
+  add <source> -g -a claude-code`. Plugins (author's marketplace, autoUpdate): hooks, MCP, agents.
+- Each skill loads from one source: global plugins in a solo project, vendored copies in a project
+  with other contributors (`promote-prefs` init has the steps).
 - HTML, CSS, browser JS: `modern-web-guidance` first, even when another skill drives the work;
   `impeccable` for design, critique, polish. Verify UI with headless Playwright, not
   Claude-in-Chrome.
 - By work shape, suggest the user-run command: `/wayfinder` (huge, multi-session),
   `/grill-with-docs` (narrow one task in a session), `/triage` (open issues), `/implement`
   (specified tickets), `/ask-matt` (unsure which).
-- In a session: `tdd` for features, `diagnosing-bugs` for broken or slow, `domain-modeling` for
-  terms and ADRs, `research`, `pr`, `gh-cli` for GitHub URLs. mattpocock's `code-review` runs once
-  per batch of small fixes, fixed point = the batch's first commit (the built-in `/code-review`
-  is a different command).
+- mattpocock's `code-review` runs once per batch of small fixes, fixed point = the batch's first
+  commit (the built-in `/code-review` is a different command).
 
 ## Keeping this current
 **Promote**: when saving a feedback memory or adding a rule to a project's instructions, check
