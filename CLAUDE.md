@@ -53,8 +53,9 @@ Global instructions deploy to `~/.claude/`. Edit them here, then `chezmoi apply`
 `settings.json` is intentionally **not** tracked here — it churns too often (plugin toggles, model
 overrides) to be worth reconciling against a template. It's machine-local, managed by hand, and its
 Bash `PreToolUse` hook runs `node "$HOME/.claude/hooks/guard-bash.mjs"` with `"onFailure": "block"`
-(needs Claude Code 2.1.295), so a missing script blocks Bash until `chezmoi apply` restores it. `settings.local.json` similarly holds
-machine-local overrides: `enableAllProjectMcpServers` and `enabledMcpjsonServers`.
+(needs Claude Code 2.1.295), so a missing script blocks Bash until `chezmoi apply` restores it.
+`settings.local.json` similarly holds machine-local overrides such as
+`enableAllProjectMcpServers`.
 
 ## .chezmoiignore
 
