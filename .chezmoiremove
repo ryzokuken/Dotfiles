@@ -3,3 +3,7 @@
 .claude/commands/hedgedoc.md
 .claude/commands/merge-dependabot.md
 .claude/commands/trailofbits/
+
+# Skill dropped with the real-sign-in browsing use case
+.agents/skills/hedgedoc
+.claude/skills/hedgedoc

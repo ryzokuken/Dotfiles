@@ -40,8 +40,8 @@ Global instructions deploy to `~/.claude/`. Edit them here, then `chezmoi apply`
   `github-actions`, `linux`, `windows`). Each platform doc deploys only on its OS.
 - `dot_agents/skills/` — skills in the open Agent Skills format, deployed to `~/.agents/skills/`;
   `dot_claude/skills/symlink_<name>` links each into `~/.claude/skills/`, the same layout
-  `pnpx skills@latest add -g -a claude-code` produces. `promote-prefs`, `fix-issue` and `hedgedoc`
-  live here.
+  `pnpx skills@latest add -g -a claude-code` produces. `promote-prefs` and `fix-issue` live
+  here.
 - `dot_claude/hooks/guard-bash.mjs` — PreToolUse guard that blocks recursive forced `rm` and
   pushes to `main`/`master`. Its tests are in `tests/`; run `node --test tests/` after editing it.
 - `dot_claude/executable_statusline.sh` — status bar: context bar, 5h/7d rate-limit bars with
