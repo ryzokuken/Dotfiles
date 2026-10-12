@@ -5,6 +5,7 @@ AGENTS.md
 GLOSSARY.md
 GLOSSARY-MAP.md
 docs/
+tests/
 .scratch/
 
 {{ if eq .chezmoi.os "windows" }}
