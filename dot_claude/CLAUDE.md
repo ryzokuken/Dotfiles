@@ -30,8 +30,8 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
 
 ## Working style
 - A file the user names is the file; leave its neighbours alone.
-- Training data is not a source: verify claims about real events, orgs, and tracker state with a
-  tool, or omit them. Look up current versions of dependencies, actions, and tools.
+- Training data is not a source: verify real events, orgs, tracker state, and versions with a tool,
+  or omit them. Look up in order: installed source, official docs, Context7, Exa, WebSearch.
 - Edit with Read + Edit; keep Bash commands small and single-purpose.
 - Subagent reports: relay what it executed or measured; verify what it merely asserted about
   context before anything irreversible. A stalled reviewer gets unstuck, not replaced by a skim
