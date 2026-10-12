@@ -25,3 +25,5 @@ machine learns a durable one.
   Deno (settler).
 - A winget Build Tools install has landed without the C++ workload; check that `VC\Tools\MSVC`
   exists instead of trusting "installed".
+- `agent-browser` (`pnpm add -g agent-browser`) runs under Git Bash and reuses the installed Brave,
+  so `agent-browser install` is not needed. Chrome is not installed here.

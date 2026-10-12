@@ -64,8 +64,8 @@ GitHub reviews and comments); network or credential access beyond reading (cloni
 - Each skill loads from one source: global plugins in a solo project, vendored copies in a project
   with other contributors (`promote-prefs` init has the steps).
 - HTML, CSS, browser JS: `modern-web-guidance` first, even when another skill drives the work;
-  `impeccable` for design, critique, polish. Verify UI with headless Playwright, not
-  Claude-in-Chrome.
+  `impeccable` for design, critique, polish. Verify UI with `agent-browser`, whose skill is
+  vendored in browser projects only; no Playwright MCP, no Claude-in-Chrome.
 - By work shape, suggest the user-run command: `/wayfinder` (huge, multi-session),
   `/grill-with-docs` (narrow one task in a session), `/triage` (open issues), `/implement`
   (specified tickets), `/ask-matt` (unsure which).

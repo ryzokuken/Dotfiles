@@ -53,5 +53,5 @@ Set `cognitive-complexity-threshold = 8` and `too-many-arguments-threshold = 5` 
   npm packages; commit `Cargo.lock`. A loose range once let `tauri-runtime` 2.12 in, which
   `tauri` 2.11.6 cannot run against (logseq-tools ADR 0009).
 - Verify the page in the running window: on Windows, start the app with
-  `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9333` and drive it over the
-  DevTools protocol.
+  `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9333`, then
+  `agent-browser connect 9333`.
