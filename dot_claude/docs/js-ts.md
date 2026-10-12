@@ -81,11 +81,18 @@ Before installing, run `pnpm audit --audit-level=moderate`.
     "complexity": ["error", { "max": 8 }],
     "max-lines-per-function": ["error", { "max": 100 }],
     "max-params": ["error", { "max": 5 }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.e2e.ts", "**/*.bench.ts"],
+      "rules": { "max-lines-per-function": "off" }
+    }
+  ]
 }
 ```
 
-Run with `oxlint --deny-warnings` so warnings fail the gate.
+Run with `oxlint --deny-warnings` so warnings fail the gate. Test files are exempt from the length
+limit because a `describe` block holds tests, not logic.
 
 ## TypeScript (apps and libraries)
 
