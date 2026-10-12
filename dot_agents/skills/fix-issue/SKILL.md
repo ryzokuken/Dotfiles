@@ -1,10 +1,14 @@
+---
+name: fix-issue
+description: Fix a GitHub issue end to end: plan, implement, test, review, fix, push, and open the PR.
+argument-hint: <issue number>
+disable-model-invocation: true
+---
+
 # Fix GitHub Issue
 
-@description End-to-end: plan, implement, test, review, fix, push, and PR for a GitHub issue.
-@arguments $ISSUE_NUMBER: GitHub issue number to fix
-
-Read GitHub Issue #$ISSUE_NUMBER from the canonical repo
-(`gh issue view $ISSUE_NUMBER --repo <owner/name>`) thoroughly.
+Read GitHub Issue #$ARGUMENTS from the canonical repo
+(`gh issue view $ARGUMENTS --repo <owner/name>`) thoroughly.
 Understand the full context: problem description, acceptance
 criteria, linked PRs, and any discussion. Follow linked issues,
 referenced PRs, and external documentation to build complete
@@ -39,7 +43,7 @@ from the codebase alone.
 
 ## 2. Plan
 
-Write a detailed implementation plan to `plan-issue-$ISSUE_NUMBER.md`
+Write a detailed implementation plan to `plan-issue-$ARGUMENTS.md`
 in the repo root. The plan must:
 
 - Summarize the issue requirements
@@ -56,7 +60,7 @@ never left uncommitted on main.
 - Determine the branch prefix from the issue type: `fix/` for
   bugs, `feat/` for features, `refactor/` for refactors, `docs/`
   for documentation. When ambiguous, use `fix/`.
-- Create a branch named `{prefix}issue-$ISSUE_NUMBER` based on
+- Create a branch named `{prefix}issue-$ARGUMENTS` based on
   the upstream remote's main branch (e.g. `upstream/main` if the
   `upstream` remote exists, otherwise `origin/main`)
 
@@ -197,7 +201,7 @@ until clean.
 
 ## 8. Commit and push
 
-- Delete the plan file (`plan-issue-$ISSUE_NUMBER.md`) — it was a
+- Delete the plan file (`plan-issue-$ARGUMENTS.md`) — it was a
   working artifact and should not be committed
 - Commit all changes with a conventional commit message referencing
   the issue
@@ -209,15 +213,15 @@ Create a PR with:
 
 - A concise title (under 70 chars)
 - A description that maps changes back to the issue requirements
-- Link to the issue with "Closes #$ISSUE_NUMBER" (or "Refs" if it
+- Link to the issue with "Closes #$ARGUMENTS" (or "Refs" if it
   doesn't fully close it)
 - If an `upstream` remote exists, submit the PR to the upstream
   repo using `gh pr create --repo <upstream-owner/repo>`
 
 ## 10. Comment on issue
 
-Post a summary comment on Issue #$ISSUE_NUMBER in the canonical
-repo (`gh issue comment $ISSUE_NUMBER --repo <owner/name>`)
+Post a summary comment on Issue #$ARGUMENTS in the canonical
+repo (`gh issue comment $ARGUMENTS --repo <owner/name>`)
 linking to the PR. Include:
 
 - What was implemented (1–3 bullet points)

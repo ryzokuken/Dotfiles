@@ -1,3 +1,10 @@
+---
+name: hedgedoc
+description: Import a HedgeDoc note from notes.igalia.com into the Logseq graph as a snapshot in pages/.
+argument-hint: <note URL>
+disable-model-invocation: true
+---
+
 Import a HedgeDoc note from notes.igalia.com into the Logseq graph as a snapshot in pages/.
 
 The URL to import is: $ARGUMENTS

@@ -1,0 +1,5 @@
+# Slash commands replaced by skills in dot_agents/skills/ or dropped (#4)
+.claude/commands/fix-issue.md
+.claude/commands/hedgedoc.md
+.claude/commands/merge-dependabot.md
+.claude/commands/trailofbits/

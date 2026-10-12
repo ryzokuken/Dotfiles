@@ -40,8 +40,10 @@ Global instructions deploy to `~/.claude/`. Edit them here, then `chezmoi apply`
   `github-actions`, `linux`, `windows`). Each platform doc deploys only on its OS.
 - `dot_agents/skills/` — skills in the open Agent Skills format, deployed to `~/.agents/skills/`;
   `dot_claude/skills/symlink_<name>` links each into `~/.claude/skills/`, the same layout
-  `pnpx skills@latest add -g -a claude-code` produces. `promote-prefs` lives here.
-- `dot_claude/commands/` — custom slash commands.
+  `pnpx skills@latest add -g -a claude-code` produces. `promote-prefs`, `fix-issue` and `hedgedoc`
+  live here.
+- `dot_claude/hooks/guard-bash.mjs` — PreToolUse guard that blocks recursive forced `rm` and
+  pushes to `main`/`master`. Its tests are in `tests/`; run `node --test tests/` after editing it.
 - `dot_claude/executable_statusline.sh` — status bar: context bar, 5h/7d rate-limit bars with
   reset countdowns, and session cost in EUR; `executable_fetch-eur-rate.sh` feeds it the EUR/USD
   rate.
@@ -49,8 +51,9 @@ Global instructions deploy to `~/.claude/`. Edit them here, then `chezmoi apply`
   (Linux) and `AppData/Local/pnpm/config/` (Windows).
 
 `settings.json` is intentionally **not** tracked here — it churns too often (plugin toggles, model
-overrides) to be worth reconciling against a template. It's machine-local, managed by hand, and it
-holds the hooks that block `rm -rf` and pushes to `main`. `settings.local.json` similarly holds
+overrides) to be worth reconciling against a template. It's machine-local, managed by hand, and its
+Bash `PreToolUse` hook runs `node "$HOME/.claude/hooks/guard-bash.mjs"`, which works from sh, Git
+Bash and PowerShell. `settings.local.json` similarly holds
 machine-local overrides: `enableAllProjectMcpServers` and `enabledMcpjsonServers`.
 
 ## .chezmoiignore
