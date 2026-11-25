@@ -7,5 +7,6 @@ The Bash tool starts from the user's zsh profile, so interactive aliases leak in
 - Search with `rg` and `fd` by name; use `ast-grep` for structural search.
 - Prefix paths that start with a dash with `./` (the memory directories do).
 - Delete with `gio trash`, which is recoverable. It refuses `/tmp` (an internal mount); leave
-  scratch files there, since a reboot clears them.
+  scratch files there, since a reboot clears them. To redo scratch work, write into a fresh
+  subdirectory: the guard hook blocks recursive forced `rm` everywhere, scratchpad included.
 - Packages: `yay` / `pacman`.
