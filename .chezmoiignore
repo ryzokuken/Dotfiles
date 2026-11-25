@@ -6,6 +6,7 @@ GLOSSARY.md
 GLOSSARY-MAP.md
 docs/
 tests/
+prek.toml
 .scratch/
 
 {{ if eq .chezmoi.os "windows" }}
@@ -16,6 +17,7 @@ tests/
 .zshrc
 .config/systemd/
 .config/pnpm/
+.gnupg/
 {{ else }}
 # Windows-only files
 .claude/docs/windows.md

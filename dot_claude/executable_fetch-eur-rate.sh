@@ -7,15 +7,15 @@ set -euo pipefail
 
 CACHE_FILE="$HOME/.cache/claude-eur-rate"
 
-rate=$(curl -sf --max-time 10 'https://api.frankfurter.app/latest?from=USD&to=EUR' \
-    | jq -r '.rates.EUR') || {
-    echo "fetch-eur-rate: network fetch failed, keeping existing cache" >&2
-    exit 0
+rate=$(curl -sf --max-time 10 'https://api.frankfurter.app/latest?from=USD&to=EUR' |
+  jq -r '.rates.EUR') || {
+  echo "fetch-eur-rate: network fetch failed, keeping existing cache" >&2
+  exit 0
 }
 
 if [[ "$rate" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
-    printf '%s\n' "$rate" > "$CACHE_FILE"
+  printf '%s\n' "$rate" >"$CACHE_FILE"
 else
-    echo "fetch-eur-rate: unexpected rate format: ${rate}" >&2
-    exit 1
+  echo "fetch-eur-rate: unexpected rate format: ${rate}" >&2
+  exit 1
 fi

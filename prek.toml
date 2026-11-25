@@ -1,0 +1,24 @@
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "shellcheck"
+name = "shellcheck"
+language = "system"
+entry = "shellcheck"
+types = ["shell"]
+
+[[repos.hooks]]
+id = "shfmt"
+name = "shfmt"
+language = "system"
+entry = "shfmt --indent 2 --diff"
+types = ["shell"]
+
+[[repos.hooks]]
+id = "guard-bash-tests"
+name = "guard-bash tests"
+language = "system"
+entry = "node --test tests/"
+pass_filenames = false
+files = "^(dot_claude/hooks/|tests/)"
