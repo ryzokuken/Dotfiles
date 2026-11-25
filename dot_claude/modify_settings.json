@@ -1,0 +1,60 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /*
+  Owns only the keys below; everything else in ~/.claude/settings.json (plugin toggles, model,
+  skillOverrides, env) stays machine-local and passes through untouched.
+*/ -}}
+{{- $settings := dict -}}
+{{- if .chezmoi.stdin -}}
+{{-   $settings = fromJson .chezmoi.stdin -}}
+{{- end -}}
+{{- $deny := `[
+  "Bash(rm -rf *)",
+  "Bash(rm -fr *)",
+  "Bash(sudo *)",
+  "Bash(mkfs *)",
+  "Bash(dd *)",
+  "Bash(wget *|bash*)",
+  "Bash(wget *| bash*)",
+  "Bash(git push --force*)",
+  "Bash(git push *--force*)",
+  "Bash(git reset --hard*)",
+  "Edit(~/.bashrc)",
+  "Edit(~/.zshrc)",
+  "Edit(~/.ssh/**)",
+  "Read(~/.ssh/**)",
+  "Read(~/.gnupg/**)",
+  "Read(~/.aws/**)",
+  "Read(~/.azure/**)",
+  "Read(~/.config/gh/**)",
+  "Read(~/.git-credentials)",
+  "Read(~/.docker/config.json)",
+  "Read(~/.kube/**)",
+  "Read(~/.npmrc)",
+  "Read(~/.npm/**)",
+  "Read(~/.pypirc)",
+  "Read(~/.gem/credentials)",
+  "Read(~/Library/Keychains/**)",
+  "Read(~/Library/Application Support/**/metamask*/**)",
+  "Read(~/Library/Application Support/**/electrum*/**)",
+  "Read(~/Library/Application Support/**/exodus*/**)",
+  "Read(~/Library/Application Support/**/phantom*/**)",
+  "Read(~/Library/Application Support/**/solflare*/**)"
+]` | fromJson -}}
+{{- $guard := `{
+  "matcher": "Bash",
+  "hooks": [
+    {
+      "type": "command",
+      "command": "node \"$HOME/.claude/hooks/guard-bash.mjs\"",
+      "onFailure": "block"
+    }
+  ]
+}` | fromJson -}}
+{{- $settings = setValueAtPath "permissions.defaultMode" "auto" $settings -}}
+{{- $settings = setValueAtPath "permissions.deny" $deny $settings -}}
+{{- $settings = setValueAtPath "hooks.PreToolUse" (list $guard) $settings -}}
+{{- if ne .chezmoi.os "windows" -}}
+{{-   $statusLine := dict "type" "command" "command" (joinPath .chezmoi.homeDir ".claude/statusline.sh") -}}
+{{-   $settings = setValueAtPath "statusLine" $statusLine $settings -}}
+{{- end -}}
+{{- toPrettyJson "  " $settings }}

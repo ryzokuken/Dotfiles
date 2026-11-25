@@ -12,15 +12,6 @@ to deploy them, then commit. This repo is solo and commits to `master`.
 Files with `.tmpl` suffix are Go text/template processed by chezmoi. Missing `{{- end }}` tags will
 silently produce broken output — always verify template structure.
 
-**OS-conditional pattern** (used in `.chezmoiignore`):
-```
-{{ if eq .chezmoi.os "windows" }}
-  ... windows-only config ...
-{{ else }}
-  ... linux config ...
-{{ end }}
-```
-
 Two machines: `burla-negra` (Linux, CachyOS/Arch) and `flying-dutchman` (Windows).
 
 ## Shell Environment
@@ -50,12 +41,16 @@ Global instructions deploy to `~/.claude/`. Edit them here, then `chezmoi apply`
 - `.chezmoitemplates/pnpm-config.yaml` — global pnpm settings, deployed to `~/.config/pnpm/`
   (Linux) and `AppData/Local/pnpm/config/` (Windows).
 
-`settings.json` is intentionally **not** tracked here — it churns too often (plugin toggles, model
-overrides) to be worth reconciling against a template. It's machine-local, managed by hand, and its
-Bash `PreToolUse` hook runs `node "$HOME/.claude/hooks/guard-bash.mjs"` with `"onFailure": "block"`
-(needs Claude Code 2.1.295), so a missing script blocks Bash until `chezmoi apply` restores it.
-`settings.local.json` similarly holds machine-local overrides such as
-`enableAllProjectMcpServers`.
+`dot_claude/modify_settings.json` is a modify-template that owns only the stable keys of
+`~/.claude/settings.json`: `permissions.defaultMode`, `permissions.deny`, `hooks.PreToolUse`, and
+`statusLine` (Linux). Everything else (plugin toggles, model, `skillOverrides`, `env`) churns, so it
+stays machine-local and passes through untouched; change those with `/plugin` or `/config`, and
+change owned keys in the template, since `chezmoi apply` overwrites them. The template re-sorts
+keys, so `chezmoi status` shows `MM` after Claude Code rewrites the file; that is harmless. The
+guard hook runs with `"onFailure": "block"` (needs Claude Code 2.1.295), so a missing script blocks
+Bash until `chezmoi apply` restores it. `settings.local.json` stays untracked.
+
+`prek` runs shellcheck, shfmt (2-space), and the guard tests on commit.
 
 ## .chezmoiignore
 
